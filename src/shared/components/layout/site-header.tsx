@@ -6,8 +6,10 @@ import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/components/ui/button'
 import { LanguageSwitcher } from '@/shared/components/layout/language-switcher'
 import { ThemeToggle } from '@/shared/components/layout/theme-toggle'
+import { MainNav } from '@/shared/components/layout/main-nav'
 import { SearchButton, SearchCommand } from '@/features/search/site-search'
 import { useContent } from '@/shared/i18n/use-content'
+import { resources } from '@/shared/i18n/resources'
 import { siteConfig } from '@/shared/config/site'
 
 export function SiteHeader() {
@@ -41,34 +43,37 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
-        {/* Brand */}
-        <a href="#top" className="leading-tight">
-          <div className="font-display text-xl font-semibold tracking-tight text-foreground">
-            {siteConfig.name.toUpperCase()}
-          </div>
-          <div className="text-[0.6rem] font-medium tracking-[0.45em] text-muted-foreground">
-            {content.brandTagline.toUpperCase()}
-          </div>
-        </a>
+        {/* Left cluster (sits over the sage panel): brand + nav */}
+        <div className="flex items-center gap-8">
+          <a href="#top" className="leading-tight">
+            <div className="font-display text-xl font-semibold tracking-tight text-foreground">
+              {siteConfig.name.toUpperCase()}
+            </div>
+            {/* dual-language sizer keeps the brand width fixed across locales */}
+            <div className="grid text-[0.6rem] font-medium tracking-[0.45em] text-muted-foreground">
+              <span
+                aria-hidden
+                className="invisible col-start-1 row-start-1 whitespace-nowrap"
+              >
+                {resources.zh.brandTagline.toUpperCase()}
+              </span>
+              <span
+                aria-hidden
+                className="invisible col-start-1 row-start-1 whitespace-nowrap"
+              >
+                {resources.en.brandTagline.toUpperCase()}
+              </span>
+              <span className="col-start-1 row-start-1 whitespace-nowrap">
+                {content.brandTagline.toUpperCase()}
+              </span>
+            </div>
+          </a>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 lg:flex">
-          {navItems.map((item, i) => (
-            <a
-              key={item.key}
-              href={item.href}
-              className={cn(
-                'relative text-sm font-medium tracking-wide text-foreground/80 transition-colors hover:text-foreground',
-                i === 0 &&
-                  'text-foreground after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:bg-foreground',
-              )}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+          <MainNav />
+        </div>
 
-        {/* Desktop actions */}
+        {/* Desktop actions (sit over the forest, divided from the nav by the
+            trunk in the backdrop) */}
         <div className="hidden items-center gap-2 lg:flex">
           <SearchButton
             onClick={() => setSearchOpen(true)}

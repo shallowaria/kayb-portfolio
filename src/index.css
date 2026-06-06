@@ -35,6 +35,10 @@
   --border: oklch(0.88 0.025 158);
   --input: oklch(0.9 0.02 158);
   --ring: oklch(0.62 0.1 160);
+
+  /* Hero text-panel fill (requested rgb 230,236,226) + card frame ink. */
+  --hero-panel: 230 236 226;
+  --frame: oklch(0.45 0.04 150 / 0.28);
 }
 
 .dark {
@@ -56,6 +60,9 @@
   --border: oklch(0.4 0.03 162);
   --input: oklch(0.4 0.03 162);
   --ring: oklch(0.6 0.1 158);
+
+  --hero-panel: 24 33 28;
+  --frame: oklch(0.75 0.03 150 / 0.22);
 }
 
 @theme inline {
@@ -155,12 +162,10 @@
     background-blend-mode: multiply, normal, overlay;
   }
 
-  /* Inner paper panel — slightly lighter, soft worn edges. */
+  /* Card frame: no fill distinction from the parchment — just an inked border. */
   .parchment-panel {
-    background-color: oklch(0.975 0.012 92);
-    box-shadow:
-      inset 0 0 0 1px oklch(0.8 0.03 85 / 0.35),
-      0 1px 2px oklch(0.7 0.04 80 / 0.15);
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px var(--frame);
   }
 
   /* Dark-mode aged paper: warm-tinted deep green-brown. */
@@ -183,10 +188,8 @@
   }
 
   .dark .parchment-panel {
-    background-color: oklch(0.3 0.02 125);
-    box-shadow:
-      inset 0 0 0 1px oklch(0.5 0.03 120 / 0.25),
-      0 1px 2px oklch(0 0 0 / 0.3);
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px var(--frame);
   }
 
   /* Irregular torn-paper edges (applied to a background-only layer so the
@@ -194,6 +197,20 @@
   .parchment-torn {
     filter: url(#paper-torn);
   }
+}
+
+/* ---- Theme circular reveal (View Transitions API) ---- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* The incoming theme sits on top; JS animates its clip-path from the click. */
+::view-transition-new(root) {
+  z-index: 9999;
+}
+::view-transition-old(root) {
+  z-index: 1;
 }
 
 

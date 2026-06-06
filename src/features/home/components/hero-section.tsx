@@ -1,9 +1,10 @@
-import { Leaf, ArrowRight } from 'lucide-react'
+import { Leaf } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { Button } from '@/shared/components/ui/button'
 import { ShimmerButton } from '@/shared/components/magicui/shimmer-button'
 import { FloatingSeeds } from '@/shared/components/magicui/floating-seeds'
+import { GrassDivider } from '@/features/home/components/grass-divider'
 import { useContent } from '@/shared/i18n/use-content'
 
 const fade = {
@@ -21,27 +22,23 @@ export function HeroSection() {
       className="relative isolate -mt-20 overflow-hidden"
       aria-label="Intro"
     >
-      {/* The forest is supplied by the fixed page backdrop (App.tsx). Here we
-          float a feathered, semi-transparent panel of paper-light behind the
-          copy so it melts into the foliage instead of cutting a hard edge. */}
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-y-0 left-0 w-[68%] bg-background/55 backdrop-blur-[3px]"
-          style={{
-            maskImage:
-              'radial-gradient(135% 115% at 8% 42%, #000 30%, rgba(0,0,0,0.6) 55%, transparent 80%)',
-            WebkitMaskImage:
-              'radial-gradient(135% 115% at 8% 42%, #000 30%, rgba(0,0,0,0.6) 55%, transparent 80%)',
-          }}
-        />
-        {/* extra soft lift directly under the headline for legibility */}
-        <div
-          className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-r from-background/45 to-transparent"
-        />
-      </div>
+      {/* Solid sage text panel (rgb 230,236,226) occupying the left, with a
+          softly feathered right edge so the forest — and its trunk — take over
+          the right side and divide the header. */}
+      <div
+        aria-hidden
+        className="absolute inset-y-0 left-0 -z-10 w-[60%] min-w-[340px]"
+        style={{
+          backgroundColor: 'rgb(var(--hero-panel))',
+          maskImage:
+            'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+        }}
+      />
       <FloatingSeeds className="-z-10" count={16} />
 
-      <div className="mx-auto max-w-6xl px-6 pb-28 pt-44 md:px-10 md:pb-36 md:pt-52">
+      <div className="mx-auto max-w-6xl px-6 pb-32 pt-44 md:px-10 md:pb-40 md:pt-52">
         <div className="max-w-xl">
           <motion.p
             {...fade}
@@ -76,7 +73,7 @@ export function HeroSection() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <ShimmerButton
-              className="font-medium tracking-wide shadow-lg shadow-primary/20"
+              className="border-2 border-black font-medium tracking-wide shadow-lg shadow-primary/20"
               shimmerColor="#d9fbe8"
             >
               <a href="#projects">{hero.viewWork}</a>
@@ -84,16 +81,16 @@ export function HeroSection() {
             <Button
               asChild
               variant="outline"
-              className="rounded-full px-7 py-3 font-medium tracking-wide"
+              className="rounded-full border-2 border-black px-7 py-3 font-medium tracking-wide"
             >
-              <a href="#contact">
-                {hero.contact}
-                <ArrowRight className="size-4" />
-              </a>
+              <a href="#contact">{hero.contact}</a>
             </Button>
           </motion.div>
         </div>
       </div>
+
+      {/* Weeds reclaiming the seam between hero and parchment. */}
+      <GrassDivider />
     </section>
   )
 }
