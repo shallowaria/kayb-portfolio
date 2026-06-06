@@ -205,11 +205,19 @@
   animation: none;
   mix-blend-mode: normal;
 }
-/* The incoming theme sits on top; JS animates its clip-path from the click. */
-::view-transition-new(root) {
-  z-index: 9999;
+/* Going dark: the new (dark) view sits on top and expands from the click. */
+html.vt-to-dark::view-transition-new(root) {
+  z-index: 2147483646;
 }
-::view-transition-old(root) {
+html.vt-to-dark::view-transition-old(root) {
+  z-index: 1;
+}
+/* Going light: the old (dark) view sits on top and shrinks toward the click,
+   so light fills in from the outside edges. */
+html.vt-to-light::view-transition-old(root) {
+  z-index: 2147483646;
+}
+html.vt-to-light::view-transition-new(root) {
   z-index: 1;
 }
 

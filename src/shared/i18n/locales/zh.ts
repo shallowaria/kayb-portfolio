@@ -36,20 +36,12 @@ export const zh: Content = {
     ],
     location: "地球",
   },
-  skills: [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Next.js",
-    "Sass",
-    "Tailwind CSS",
-    "Git",
-    "Figma",
-    "Vite",
-    "Jest",
-  ],
+  skillCategories: {
+    basics: "基础",
+    frameworks: "框架",
+    state: "状态管理",
+    tooling: "工具",
+  },
   experiences: [
     {
       role: "高级前端开发工程师",

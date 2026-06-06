@@ -39,20 +39,12 @@ export const en: Content = {
     ],
     location: "Earth",
   },
-  skills: [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Next.js",
-    "Sass",
-    "Tailwind CSS",
-    "Git",
-    "Figma",
-    "Vite",
-    "Jest",
-  ],
+  skillCategories: {
+    basics: "Basics",
+    frameworks: "Frameworks",
+    state: "State Management",
+    tooling: "Tooling",
+  },
   experiences: [
     {
       role: "Senior Front-end Developer",

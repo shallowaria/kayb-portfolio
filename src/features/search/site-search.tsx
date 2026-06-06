@@ -18,6 +18,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/shared/components/ui/command'
+import { headerActionTone } from '@/shared/components/layout/action-tone'
 import { useContent } from '@/shared/i18n/use-content'
 
 /** Icon trigger — render as many as needed (desktop + mobile). */
@@ -36,7 +37,8 @@ export function SearchButton({
       onClick={onClick}
       aria-label={label}
       className={cn(
-        'flex size-9 cursor-pointer items-center justify-center rounded-full text-foreground/80 transition-colors hover:bg-primary/10 hover:text-primary',
+        'flex size-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-primary/10',
+        headerActionTone,
         className,
       )}
     >

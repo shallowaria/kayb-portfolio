@@ -52,7 +52,12 @@ export interface Content {
     bio: string[]
     location: string
   }
-  skills: string[]
+  skillCategories: {
+    basics: string
+    frameworks: string
+    state: string
+    tooling: string
+  }
   experiences: ExperienceItem[]
   projects: ProjectItem[]
   education: EducationItem[]

@@ -73,7 +73,7 @@ export function HeroSection() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <ShimmerButton
-              className="border-2 border-black font-medium tracking-wide shadow-lg shadow-primary/20"
+              className="h-12 min-w-[160px] justify-center rounded-full border-2 border-black px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20"
               shimmerColor="#d9fbe8"
             >
               <a href="#projects">{hero.viewWork}</a>
@@ -81,7 +81,7 @@ export function HeroSection() {
             <Button
               asChild
               variant="outline"
-              className="rounded-full border-2 border-black px-7 py-3 font-medium tracking-wide"
+              className="h-12 min-w-[160px] justify-center rounded-full border-2 border-black px-8 text-sm font-medium tracking-wide"
             >
               <a href="#contact">{hero.contact}</a>
             </Button>

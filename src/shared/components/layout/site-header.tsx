@@ -35,8 +35,9 @@ export function SiteHeader() {
 
   return (
     <header
+      data-scrolled={scrolled ? 'true' : 'false'}
       className={cn(
-        'sticky top-0 z-40 transition-colors duration-300',
+        'group/header sticky top-0 z-40 transition-colors duration-300',
         scrolled
           ? 'border-b border-border/50 bg-background/70 shadow-[0_8px_30px_-18px_rgba(20,40,30,0.5)] backdrop-blur-md'
           : 'border-b border-transparent',

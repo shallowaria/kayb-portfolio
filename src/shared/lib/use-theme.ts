@@ -53,6 +53,12 @@ export function useTheme() {
         Math.max(y, window.innerHeight - y),
       )
 
+      const goingDark = next === 'dark'
+      const root = document.documentElement
+      const dirClass = goingDark ? 'vt-to-dark' : 'vt-to-light'
+      root.classList.add(dirClass)
+      const clearDir = () => root.classList.remove('vt-to-dark', 'vt-to-light')
+
       let transition: { ready: Promise<void> } | undefined
       try {
         transition = (
@@ -62,29 +68,37 @@ export function useTheme() {
         ).startViewTransition(() => applyTheme(next))
       } catch {
         applyTheme(next)
+        clearDir()
         return
       }
 
       transition.ready
         .then(() => {
-          document.documentElement.animate(
-            {
-              clipPath: [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`,
-              ],
-            },
-            {
-              duration: 480,
-              easing: 'ease-in-out',
-              pseudoElement: '::view-transition-new(root)',
-            },
-          )
+          const grow = `circle(${endRadius}px at ${x}px ${y}px)`
+          const point = `circle(0px at ${x}px ${y}px)`
+          const opts = {
+            duration: 520,
+            easing: 'ease-in-out',
+          } as const
+          if (goingDark) {
+            // Dark expands outward from the click point.
+            root.animate(
+              { clipPath: [point, grow] },
+              { ...opts, pseudoElement: '::view-transition-new(root)' },
+            )
+          } else {
+            // Light fills inward: the old dark layer shrinks toward the point.
+            root.animate(
+              { clipPath: [grow, point] },
+              { ...opts, pseudoElement: '::view-transition-old(root)' },
+            )
+          }
         })
         .catch(() => {})
 
-      // Safety net: if the transition's update callback is skipped by the
-      // environment, ensure the theme still lands shortly after.
+      // Remove the direction marker once the animation is over.
+      window.setTimeout(clearDir, 800)
+      // Safety net: ensure the theme lands even if the callback was skipped.
       window.setTimeout(() => {
         if ((getSnapshot() === 'dark') !== (next === 'dark')) applyTheme(next)
       }, 250)
