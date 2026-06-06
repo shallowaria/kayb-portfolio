@@ -1,0 +1,78 @@
+export interface ExperienceItem {
+  role: string
+  company: string
+  period: string
+  summary: string
+}
+
+export interface ProjectItem {
+  title: string
+  description: string
+  link: string
+  linkLabel: string
+  cover: string
+}
+
+export interface EducationItem {
+  degree: string
+  school: string
+  period: string
+}
+
+/** The full translatable content tree. en and zh both implement this shape. */
+export interface Content {
+  nav: {
+    home: string
+    about: string
+    experience: string
+    projects: string
+    contact: string
+  }
+  brandTagline: string
+  hero: {
+    greeting: string
+    titleLines: [string, string]
+    tagline: string
+    viewWork: string
+    contact: string
+  }
+  actions: {
+    downloadResume: string
+    viewAll: string
+  }
+  sections: {
+    about: string
+    skills: string
+    education: string
+    experience: string
+    projects: string
+    quote: string
+  }
+  about: {
+    bio: string[]
+    location: string
+  }
+  skills: string[]
+  experiences: ExperienceItem[]
+  projects: ProjectItem[]
+  education: EducationItem[]
+  quote: {
+    text: string
+    author: string
+  }
+  footer: {
+    rights: string
+  }
+  language: {
+    label: string
+    zh: string
+    en: string
+  }
+  search: {
+    label: string
+    placeholder: string
+    sections: string
+    projects: string
+    empty: string
+  }
+}

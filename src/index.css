@@ -1,0 +1,199 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---- Kayblis · Scavengers-inspired forest theme ---- */
+:root {
+  --radius: 0.75rem;
+
+  /* misty pale-green canvas */
+  --background: oklch(0.97 0.018 155);
+  --foreground: oklch(0.28 0.04 165);
+
+  --card: oklch(0.99 0.008 150);
+  --card-foreground: oklch(0.28 0.04 165);
+
+  --popover: oklch(0.99 0.008 150);
+  --popover-foreground: oklch(0.28 0.04 165);
+
+  /* deep forest green */
+  --primary: oklch(0.52 0.11 160);
+  --primary-foreground: oklch(0.98 0.01 150);
+
+  --secondary: oklch(0.93 0.03 158);
+  --secondary-foreground: oklch(0.35 0.06 162);
+
+  --muted: oklch(0.94 0.02 158);
+  --muted-foreground: oklch(0.52 0.03 160);
+
+  --accent: oklch(0.9 0.06 152);
+  --accent-foreground: oklch(0.32 0.06 165);
+
+  --destructive: oklch(0.58 0.2 27);
+
+  --border: oklch(0.88 0.025 158);
+  --input: oklch(0.9 0.02 158);
+  --ring: oklch(0.62 0.1 160);
+}
+
+.dark {
+  --background: oklch(0.22 0.03 165);
+  --foreground: oklch(0.95 0.015 150);
+  --card: oklch(0.26 0.03 165);
+  --card-foreground: oklch(0.95 0.015 150);
+  --popover: oklch(0.26 0.03 165);
+  --popover-foreground: oklch(0.95 0.015 150);
+  --primary: oklch(0.7 0.12 158);
+  --primary-foreground: oklch(0.2 0.03 165);
+  --secondary: oklch(0.32 0.04 162);
+  --secondary-foreground: oklch(0.95 0.015 150);
+  --muted: oklch(0.32 0.03 162);
+  --muted-foreground: oklch(0.7 0.03 158);
+  --accent: oklch(0.36 0.05 158);
+  --accent-foreground: oklch(0.95 0.015 150);
+  --destructive: oklch(0.62 0.2 25);
+  --border: oklch(0.4 0.03 162);
+  --input: oklch(0.4 0.03 162);
+  --ring: oklch(0.6 0.1 158);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', 'Inter', ui-serif, serif;
+
+  /* MagicUI helpers */
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
+}
+
+@keyframes shimmer-slide {
+  to {
+    transform: translate(calc(100cqw - 100%), 0);
+  }
+}
+
+@keyframes spin-around {
+  0% {
+    transform: translateZ(0) rotate(0);
+  }
+  15%,
+  35% {
+    transform: translateZ(0) rotate(90deg);
+  }
+  65%,
+  85% {
+    transform: translateZ(0) rotate(270deg);
+  }
+  100% {
+    transform: translateZ(0) rotate(360deg);
+  }
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  /* Aged parchment surface — warm cream wash + fibrous grain. */
+  .parchment {
+    background-color: oklch(0.955 0.022 92);
+    background-image:
+      radial-gradient(
+        120% 120% at 18% 8%,
+        oklch(0.97 0.02 96 / 0.9) 0%,
+        oklch(0.93 0.03 88 / 0.4) 55%,
+        transparent 100%
+      ),
+      radial-gradient(
+        100% 100% at 92% 100%,
+        oklch(0.88 0.04 82 / 0.5) 0%,
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    background-blend-mode: multiply, normal, overlay;
+  }
+
+  /* Inner paper panel — slightly lighter, soft worn edges. */
+  .parchment-panel {
+    background-color: oklch(0.975 0.012 92);
+    box-shadow:
+      inset 0 0 0 1px oklch(0.8 0.03 85 / 0.35),
+      0 1px 2px oklch(0.7 0.04 80 / 0.15);
+  }
+
+  /* Dark-mode aged paper: warm-tinted deep green-brown. */
+  .dark .parchment {
+    background-color: oklch(0.26 0.022 120);
+    background-image:
+      radial-gradient(
+        120% 120% at 18% 8%,
+        oklch(0.3 0.025 130 / 0.9) 0%,
+        oklch(0.24 0.02 120 / 0.5) 55%,
+        transparent 100%
+      ),
+      radial-gradient(
+        100% 100% at 92% 100%,
+        oklch(0.2 0.02 110 / 0.6) 0%,
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    background-blend-mode: multiply, normal, soft-light;
+  }
+
+  .dark .parchment-panel {
+    background-color: oklch(0.3 0.02 125);
+    box-shadow:
+      inset 0 0 0 1px oklch(0.5 0.03 120 / 0.25),
+      0 1px 2px oklch(0 0 0 / 0.3);
+  }
+
+  /* Irregular torn-paper edges (applied to a background-only layer so the
+     displacement never wobbles the text above it). */
+  .parchment-torn {
+    filter: url(#paper-torn);
+  }
+}
+
+
