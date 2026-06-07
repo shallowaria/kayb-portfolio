@@ -73,7 +73,7 @@ export function HeroSection() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <ShimmerButton
-              className="h-12 min-w-[160px] justify-center rounded-full border-2 border-black px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20"
+              className="h-12 min-w-[160px] justify-center rounded-full border-transparent px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20"
               shimmerColor="#d9fbe8"
             >
               <a href="#projects">{hero.viewWork}</a>

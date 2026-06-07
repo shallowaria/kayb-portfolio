@@ -1,16 +1,13 @@
 import { Leaf } from 'lucide-react'
 
-import { SectionHeading } from '@/shared/components/section-heading'
 import { useContent } from '@/shared/i18n/use-content'
-import { PaperPanel } from '@/features/home/components/paper-panel'
+import { PaperSection } from '@/features/home/components/paper-section'
 
 export function ExperienceCard() {
   const content = useContent()
 
   return (
-    <PaperPanel id="experience" className="scroll-mt-24">
-      <SectionHeading>{content.sections.experience}</SectionHeading>
-
+    <PaperSection id="experience" title={content.sections.experience}>
       <div className="divide-y divide-amber-900/10">
         {content.experiences.map((exp) => (
           <div key={exp.role} className="flex gap-4 py-5 first:pt-0 last:pb-0">
@@ -32,6 +29,6 @@ export function ExperienceCard() {
           </div>
         ))}
       </div>
-    </PaperPanel>
+    </PaperSection>
   )
 }

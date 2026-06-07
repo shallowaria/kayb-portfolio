@@ -1,15 +1,13 @@
 import { GraduationCap } from 'lucide-react'
 
-import { SectionHeading } from '@/shared/components/section-heading'
 import { useContent } from '@/shared/i18n/use-content'
-import { PaperPanel } from '@/features/home/components/paper-panel'
+import { PaperSection } from '@/features/home/components/paper-section'
 
 export function EducationCard() {
   const content = useContent()
 
   return (
-    <PaperPanel>
-      <SectionHeading>{content.sections.education}</SectionHeading>
+    <PaperSection title={content.sections.education}>
       <div className="space-y-5">
         {content.education.map((edu) => (
           <div key={edu.degree} className="flex items-start gap-3">
@@ -24,6 +22,6 @@ export function EducationCard() {
           </div>
         ))}
       </div>
-    </PaperPanel>
+    </PaperSection>
   )
 }

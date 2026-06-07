@@ -31,6 +31,7 @@ export const en: Content = {
     experience: "EXPERIENCE",
     projects: "FEATURED PROJECTS",
     quote: "QUOTE",
+    contact: "GET IN TOUCH",
   },
   about: {
     bio: [
@@ -104,5 +105,11 @@ export const en: Content = {
     sections: "Sections",
     projects: "Projects",
     empty: "No results found.",
+  },
+  contact: {
+    qq: "QQ",
+    wechat: "WeChat",
+    email: "Email",
+    phone: "Phone",
   },
 };

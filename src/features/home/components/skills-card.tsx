@@ -1,15 +1,12 @@
-import { SectionHeading } from '@/shared/components/section-heading'
 import { useContent } from '@/shared/i18n/use-content'
 import { skillCategories } from '@/shared/config/skills'
-import { PaperPanel } from '@/features/home/components/paper-panel'
+import { PaperSection } from '@/features/home/components/paper-section'
 
 export function SkillsCard() {
   const content = useContent()
 
   return (
-    <PaperPanel>
-      <SectionHeading>{content.sections.skills}</SectionHeading>
-
+    <PaperSection title={content.sections.skills}>
       <div className="space-y-4">
         {skillCategories.map((category) => (
           <div key={category.key}>
@@ -32,6 +29,6 @@ export function SkillsCard() {
           </div>
         ))}
       </div>
-    </PaperPanel>
+    </PaperSection>
   )
 }

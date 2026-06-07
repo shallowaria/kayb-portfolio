@@ -1,10 +1,7 @@
 import { Mail } from 'lucide-react'
 
-import {
-  GithubIcon,
-  TwitterIcon,
-  LinkedinIcon,
-} from '@/shared/components/icons/brand-icons'
+import { GithubIcon, TwitterIcon } from '@/shared/components/icons/brand-icons'
+import { BilibiliIcon } from '@/shared/components/icons/bilibili-icon'
 import { useContent } from '@/shared/i18n/use-content'
 import { siteConfig } from '@/shared/config/site'
 
@@ -14,15 +11,12 @@ export function SiteFooter() {
   const socials = [
     { label: 'GitHub', href: siteConfig.social.github, Icon: GithubIcon },
     { label: 'Twitter', href: siteConfig.social.twitter, Icon: TwitterIcon },
-    { label: 'LinkedIn', href: siteConfig.social.linkedin, Icon: LinkedinIcon },
+    { label: 'Bilibili', href: siteConfig.social.bilibili, Icon: BilibiliIcon },
     { label: 'Email', href: `mailto:${siteConfig.email}`, Icon: Mail },
   ]
 
   return (
-    <footer
-      id="contact"
-      className="scroll-mt-24 border-t border-amber-900/10"
-    >
+    <footer className="border-t border-amber-900/10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-7 sm:flex-row md:px-10">
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} {siteConfig.name} {content.brandTagline}.{' '}

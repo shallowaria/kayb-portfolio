@@ -9,11 +9,14 @@ function rand(seed: number) {
 const VIEW_W = 620
 const VIEW_H = 150
 const BLADES = 64
+/** Stop the weeds at this x (viewBox units) — nothing past it on the right. */
+const GRASS_END = 432
 
 function buildBlades() {
   const blades: { d: string; opacity: number }[] = []
   for (let i = 0; i < BLADES; i++) {
     const base = (i / BLADES) * VIEW_W + rand(i) * 12
+    if (base > GRASS_END) continue
     const height = 64 + rand(i + 1) * 84
     const width = 6 + rand(i + 2) * 10
     const sway = (rand(i + 3) - 0.5) * 38
@@ -41,9 +44,17 @@ export function GrassDivider({ className }: { className?: string }) {
     <div
       aria-hidden
       className={
-        'pointer-events-none absolute bottom-0 left-0 z-10 h-28 w-1/2 md:h-36 ' +
+        'pointer-events-none absolute bottom-0 left-0 z-10 h-28 w-[60%] min-w-[340px] md:h-36 ' +
         (className ?? '')
       }
+      style={{
+        // Fade out on the right exactly like the hero panel, so the weeds never
+        // spill past where the sage panel dissolves into the forest.
+        maskImage:
+          'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+        WebkitMaskImage:
+          'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+      }}
     >
       <svg
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}

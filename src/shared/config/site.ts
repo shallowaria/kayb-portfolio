@@ -1,7 +1,7 @@
 /** Language-neutral site metadata: links, images, identity. */
 export const siteConfig = {
   name: 'Kayblis',
-  email: 'hello@kayblis.dev',
+  email: 'shallowaria@gmail.com',
   website: 'www.kayblis.dev',
   resumeUrl: '/resume.pdf',
 
@@ -9,9 +9,16 @@ export const siteConfig = {
   heroImage: '/hero-bg.png',
 
   social: {
-    github: 'https://github.com/',
-    twitter: 'https://twitter.com/',
-    linkedin: 'https://linkedin.com/',
+    github: 'https://github.com/shallowaria',
+    twitter: 'https://x.com/Kaybliscy',
+    bilibili: 'https://space.bilibili.com/7213886',
+  },
+
+  // Contact handles shown in the Contact section (replace the placeholders).
+  contact: {
+    qq: '123456789',
+    wechat: 'kayblis',
+    phone: '+86 138 0000 0000',
   },
 
   /**
@@ -29,11 +36,11 @@ export const siteConfig = {
       height: 1067,
     },
     about: {
-      src: '/about-scene.jpg',
+      src: '/about-portrait.png',
       srcSet: '',
       sizes: '(min-width: 1024px) 320px, 100vw',
       width: 640,
-      height: 360,
+      height: 416,
     },
     // Project covers keep their src in the i18n content (per-language captions),
     // these provide width-aware loading hints by index.

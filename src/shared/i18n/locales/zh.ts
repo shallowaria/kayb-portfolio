@@ -28,6 +28,7 @@ export const zh: Content = {
     experience: "工作经历",
     projects: "精选项目",
     quote: "箴言",
+    contact: "联系方式",
   },
   about: {
     bio: [
@@ -100,5 +101,11 @@ export const zh: Content = {
     sections: "板块",
     projects: "项目",
     empty: "没有找到结果。",
+  },
+  contact: {
+    qq: "QQ",
+    wechat: "微信",
+    email: "邮箱",
+    phone: "电话",
   },
 };

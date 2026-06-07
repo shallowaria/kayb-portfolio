@@ -47,6 +47,7 @@ export interface Content {
     experience: string
     projects: string
     quote: string
+    contact: string
   }
   about: {
     bio: string[]
@@ -79,5 +80,11 @@ export interface Content {
     sections: string
     projects: string
     empty: string
+  }
+  contact: {
+    qq: string
+    wechat: string
+    email: string
+    phone: string
   }
 }
