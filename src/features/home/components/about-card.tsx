@@ -65,7 +65,7 @@ export function AboutCard() {
         </ul>
       </div>
 
-      <BorderBeam size={70} duration={9} />
+      <BorderBeam image="/scrollbar-thumb.png" size={44} duration={9} />
     </PaperSection>
   )
 }

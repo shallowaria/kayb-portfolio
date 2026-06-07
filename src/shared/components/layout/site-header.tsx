@@ -1,83 +1,80 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
-import { Download, Menu, X } from 'lucide-react'
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Download, Menu, X } from "lucide-react";
 
-import { cn } from '@/shared/lib/utils'
-import { Button } from '@/shared/components/ui/button'
-import { LanguageSwitcher } from '@/shared/components/layout/language-switcher'
-import { ThemeToggle } from '@/shared/components/layout/theme-toggle'
-import { MainNav } from '@/shared/components/layout/main-nav'
+import { cn } from "@/shared/lib/utils";
+import { Button } from "@/shared/components/ui/button";
+import { LanguageSwitcher } from "@/shared/components/layout/language-switcher";
+import { ThemeToggle } from "@/shared/components/layout/theme-toggle";
+import { MainNav } from "@/shared/components/layout/main-nav";
 import {
   headerActionToneDesktop,
   headerActionToneMobile,
-} from '@/shared/components/layout/action-tone'
-import { SearchButton, SearchCommand } from '@/features/search/site-search'
-import { useContent } from '@/shared/i18n/use-content'
-import { resources } from '@/shared/i18n/resources'
-import { siteConfig } from '@/shared/config/site'
+} from "@/shared/components/layout/action-tone";
+import { SearchButton, SearchCommand } from "@/features/search/site-search";
+import { useContent } from "@/shared/i18n/use-content";
+import { resources } from "@/shared/i18n/resources";
+import { siteConfig } from "@/shared/config/site";
 
 export function SiteHeader() {
-  const content = useContent()
-  const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const [overParchment, setOverParchment] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-  const lastY = useRef(0)
+  const content = useContent();
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [overParchment, setOverParchment] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY
-      setScrolled(y > 8)
+      const y = window.scrollY;
+      setScrolled(y > 8);
       // Slide the bar up when scrolling down, reveal it when scrolling up.
-      if (y > lastY.current && y > 96) setHidden(true)
-      else if (y < lastY.current) setHidden(false)
-      lastY.current = y
+      if (y > lastY.current && y > 96) setHidden(true);
+      else if (y < lastY.current) setHidden(false);
+      lastY.current = y;
       // Has the header reached the parchment content yet? (header height = 80px)
-      const start = document.getElementById('content-start')
-      setOverParchment(start ? start.getBoundingClientRect().top <= 80 : false)
-    }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
+      const start = document.getElementById("content-start");
+      setOverParchment(start ? start.getBoundingClientRect().top <= 80 : false);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   const navItems = [
-    { key: 'home', label: content.nav.home, href: '#top' },
-    { key: 'experience', label: content.nav.experience, href: '#experience' },
-    { key: 'projects', label: content.nav.projects, href: '#projects' },
-    { key: 'contact', label: content.nav.contact, href: '#contact' },
-  ]
+    { key: "home", label: content.nav.home, href: "#top" },
+    { key: "experience", label: content.nav.experience, href: "#experience" },
+    { key: "projects", label: content.nav.projects, href: "#projects" },
+    { key: "contact", label: content.nav.contact, href: "#contact" },
+  ];
 
-  const handleNavClick = (
-    e: MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    e.preventDefault()
-    setMenuOpen(false)
-    const id = href.slice(1)
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    const id = href.slice(1);
     requestAnimationFrame(() =>
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }),
-    )
-  }
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),
+    );
+  };
 
   return (
     <header
-      data-parchment={overParchment ? 'true' : 'false'}
+      data-parchment={overParchment ? "true" : "false"}
       className={cn(
-        'group/header sticky top-0 z-40 transition-[transform,background-color,backdrop-filter,border-color] duration-300 ease-out',
-        hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0',
+        "group/header sticky top-0 z-40 transition-[transform,background-color,backdrop-filter,border-color] duration-300 ease-out",
+        hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
         overParchment
           ? // Over parchment: light-green → sky-blue gradient bar.
-            'border-b border-border/30 bg-gradient-to-r from-emerald-100/90 to-sky-200/90 backdrop-blur-md dark:from-emerald-950/85 dark:to-sky-950/85'
+            "border-b border-border/30 bg-gradient-to-r from-emerald-100/90 to-sky-200/90 backdrop-blur-md dark:from-emerald-950/85 dark:to-sky-950/85"
           : scrolled || menuOpen
             ? // Scrolled, or menu open: frosted bar on mobile for legibility.
-              'border-b border-transparent max-lg:border-border/30 max-lg:bg-background/70 max-lg:backdrop-blur-md'
-            : 'border-b border-transparent',
+              "border-b border-transparent max-lg:border-border/30 max-lg:bg-background/70 max-lg:backdrop-blur-md"
+            : "border-b border-transparent",
       )}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
@@ -163,9 +160,9 @@ export function SiteHeader() {
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="absolute inset-x-0 top-full overflow-hidden border-t border-border/50 bg-background/95 backdrop-blur-md lg:hidden"
           >
             <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
@@ -195,5 +192,5 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
     </header>
-  )
+  );
 }

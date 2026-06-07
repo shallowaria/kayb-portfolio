@@ -23,6 +23,8 @@ interface BorderBeamProps {
   reverse?: boolean
   /** The border width. */
   borderWidth?: number
+  /** Optional image to travel along the border instead of the gradient beam. */
+  image?: string
 }
 
 export const BorderBeam = ({
@@ -35,6 +37,7 @@ export const BorderBeam = ({
   style,
   reverse = false,
   borderWidth = 1.5,
+  image,
 }: BorderBeamProps) => {
   return (
     <div
@@ -44,7 +47,8 @@ export const BorderBeam = ({
       <motion.div
         className={cn(
           'absolute aspect-square',
-          'bg-gradient-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent',
+          !image &&
+            'bg-gradient-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent',
           className,
         )}
         style={
@@ -68,7 +72,16 @@ export const BorderBeam = ({
             delay: -delay,
           } as Transition
         }
-      />
+      >
+        {image && (
+          <img
+            src={image}
+            alt=""
+            aria-hidden
+            className="size-full object-contain"
+          />
+        )}
+      </motion.div>
     </div>
   )
 }

@@ -39,16 +39,12 @@ export function HeroSection() {
             "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
         }}
       />
-      {/* Mobile: no panel/weeds — show the forest uniformly with a light wash
-          so the copy stays legible. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-background/45 lg:hidden"
-      />
+      {/* Mobile: no panel/weeds — the forest shows through directly; the copy
+          gets a soft glow so it stays legible without a hazy overlay. */}
       <FloatingSeeds className="-z-10" count={16} />
 
       <div className="mx-auto max-w-6xl px-6 pb-32 pt-44 md:px-10 md:pb-40 md:pt-52">
-        <div className="max-w-xl">
+        <div className="max-w-xl max-lg:[text-shadow:0_1px_14px_rgb(255_255_255_/_0.9)] dark:max-lg:[text-shadow:0_1px_14px_rgb(0_0_0_/_0.7)]">
           <motion.p
             {...fade}
             transition={{ duration: 0.5 }}
@@ -69,7 +65,7 @@ export function HeroSection() {
           <motion.p
             {...fade}
             transition={{ duration: 0.6, delay: 0.16 }}
-            className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground"
+            className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground max-lg:font-medium max-lg:text-foreground/85"
           >
             {hero.tagline}
           </motion.p>
@@ -81,7 +77,7 @@ export function HeroSection() {
           >
             <ShimmerButton
               onClick={goTo("projects")}
-              className="h-12 min-w-[160px] justify-center rounded-full border-transparent px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20 max-lg:min-w-0 max-lg:flex-1"
+              className="h-12 min-w-[160px] justify-center rounded-full border-transparent px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20 transition-[transform,filter] hover:brightness-110 active:brightness-95 max-lg:min-w-0 max-lg:flex-1"
               shimmerColor="#d9fbe8"
             >
               {hero.viewWork}

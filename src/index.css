@@ -235,26 +235,24 @@ html.vt-to-light::view-transition-new(root) {
   z-index: 1;
 }
 
-/* ---- Custom scrollbar (image thumb) ---- */
+/* ---- Custom scrollbar: thin themed (light-green) line ---- */
 ::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-image: url('/scrollbar-thumb.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: oklch(0.72 0.11 160);
   border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  min-height: 56px;
 }
-/* NOTE: do not set the standard `scrollbar-width`/`scrollbar-color` here —
-   modern Chromium honours them and then ignores the ::-webkit-scrollbar image
-   thumb above. Firefox keeps its default scrollbar (no image support). */
+::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.64 0.12 160);
+}
+html {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.72 0.11 160) transparent;
+}
 
 
