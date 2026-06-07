@@ -1,7 +1,6 @@
 import { Languages, Check } from 'lucide-react'
 
 import { cn } from '@/shared/lib/utils'
-import { headerActionTone } from '@/shared/components/layout/action-tone'
 import { useContent, useLanguage } from '@/shared/i18n/use-content'
 import { LANGS, type Lang } from '@/shared/i18n/resources'
 
@@ -15,13 +14,13 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   }
 
   return (
-    <div className={cn('group/lang relative', className)}>
+    <div className="group/lang relative">
       <button
         type="button"
         aria-label={content.language.label}
         className={cn(
           'flex size-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-primary/10 group-hover/lang:bg-primary/10',
-          headerActionTone,
+          className,
         )}
       >
         <Languages className="size-[18px]" />

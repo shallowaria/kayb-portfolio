@@ -9,7 +9,7 @@ export function HomePage() {
 
       {/* Lower half of the sheet. The parchment lives on its own layer so the
           torn-edge filter never distorts the content sitting above it. */}
-      <div className="relative z-10 -mt-10">
+      <div id="content-start" className="relative z-10 -mt-10">
         <div
           aria-hidden
           className="parchment parchment-torn absolute inset-x-0 -top-2 bottom-0"

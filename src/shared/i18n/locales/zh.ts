@@ -11,7 +11,7 @@ export const zh: Content = {
   brandTagline: "求职页",
   hero: {
     greeting: "你好，我是 Kayblis。",
-    titleLines: ["前端开发者", "与故事讲述者"],
+    titleLines: ["是一名", "前端开发者"],
     tagline:
       "我用整洁的代码、精致的界面与有温度的故事，构建可扩展的 Web 体验。",
     viewWork: "查看作品",
@@ -107,5 +107,6 @@ export const zh: Content = {
     wechat: "微信",
     email: "邮箱",
     phone: "电话",
+    copied: "已复制！",
   },
 };

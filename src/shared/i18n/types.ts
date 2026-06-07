@@ -86,5 +86,6 @@ export interface Content {
     wechat: string
     email: string
     phone: string
+    copied: string
   }
 }

@@ -7,6 +7,10 @@ import { Button } from '@/shared/components/ui/button'
 import { LanguageSwitcher } from '@/shared/components/layout/language-switcher'
 import { ThemeToggle } from '@/shared/components/layout/theme-toggle'
 import { MainNav } from '@/shared/components/layout/main-nav'
+import {
+  headerActionToneDesktop,
+  headerActionToneMobile,
+} from '@/shared/components/layout/action-tone'
 import { SearchButton, SearchCommand } from '@/features/search/site-search'
 import { useContent } from '@/shared/i18n/use-content'
 import { resources } from '@/shared/i18n/resources'
@@ -16,6 +20,7 @@ export function SiteHeader() {
   const content = useContent()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [overParchment, setOverParchment] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const lastY = useRef(0)
@@ -28,10 +33,17 @@ export function SiteHeader() {
       if (y > lastY.current && y > 96) setHidden(true)
       else if (y < lastY.current) setHidden(false)
       lastY.current = y
+      // Has the header reached the parchment content yet? (header height = 80px)
+      const start = document.getElementById('content-start')
+      setOverParchment(start ? start.getBoundingClientRect().top <= 80 : false)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   const navItems = [
@@ -43,10 +55,17 @@ export function SiteHeader() {
 
   return (
     <header
-      data-scrolled={scrolled ? 'true' : 'false'}
+      data-parchment={overParchment ? 'true' : 'false'}
       className={cn(
-        'group/header sticky top-0 z-40 transition-transform duration-300 ease-out',
+        'group/header sticky top-0 z-40 transition-[transform,background-color,backdrop-filter,border-color] duration-300 ease-out',
         hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0',
+        overParchment
+          ? // Over parchment: light-green → sky-blue gradient bar.
+            'border-b border-border/30 bg-gradient-to-r from-emerald-100/90 to-sky-200/90 backdrop-blur-md dark:from-emerald-950/85 dark:to-sky-950/85'
+          : scrolled
+            ? // Scrolled but still over the hero: blur only on mobile for legibility.
+              'border-b border-transparent max-lg:border-border/30 max-lg:bg-background/65 max-lg:backdrop-blur-md'
+            : 'border-b border-transparent',
       )}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
@@ -85,9 +104,10 @@ export function SiteHeader() {
           <SearchButton
             onClick={() => setSearchOpen(true)}
             label={content.search.label}
+            className={headerActionToneDesktop}
           />
-          <LanguageSwitcher />
-          <ThemeToggle />
+          <LanguageSwitcher className={headerActionToneDesktop} />
+          <ThemeToggle className={headerActionToneDesktop} />
           <Button
             asChild
             variant="outline"
@@ -106,15 +126,16 @@ export function SiteHeader() {
           <SearchButton
             onClick={() => setSearchOpen(true)}
             label={content.search.label}
+            className={headerActionToneMobile}
           />
-          <LanguageSwitcher />
-          <ThemeToggle />
+          <LanguageSwitcher className={headerActionToneMobile} />
+          <ThemeToggle className={headerActionToneMobile} />
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-label="Toggle menu"
-            className="flex size-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground/80 backdrop-blur-sm transition-colors hover:text-foreground"
+            className="flex size-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-primary backdrop-blur-sm transition-colors hover:text-primary group-data-[parchment=true]/header:text-foreground/80"
           >
             {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>

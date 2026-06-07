@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 
 import { SectionHeading } from '@/shared/components/section-heading'
 import { ResponsiveImage } from '@/shared/components/responsive-image'
@@ -56,19 +56,7 @@ export function FeaturedProjects() {
 
   return (
     <section id="projects" className="scroll-mt-24">
-      <SectionHeading
-        action={
-          <a
-            href="#"
-            className="inline-flex items-center gap-1 text-xs font-medium tracking-wide text-muted-foreground transition-colors hover:text-primary"
-          >
-            {content.actions.viewAll}
-            <ArrowRight className="size-3.5" />
-          </a>
-        }
-      >
-        {content.sections.projects}
-      </SectionHeading>
+      <SectionHeading>{content.sections.projects}</SectionHeading>
 
       <div className="space-y-5">
         {content.projects.map((project) => (

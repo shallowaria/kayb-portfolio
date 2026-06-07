@@ -201,9 +201,15 @@
   }
 
   /* Irregular torn-paper edges (applied to a background-only layer so the
-     displacement never wobbles the text above it). */
+     displacement never wobbles the text above it). Desktop only — on small
+     screens the heavy SVG filter looks broken/janky, so we skip it. */
   .parchment-torn {
-    filter: url(#paper-torn);
+    filter: none;
+  }
+  @media (min-width: 1024px) {
+    .parchment-torn {
+      filter: url(#paper-torn);
+    }
   }
 }
 

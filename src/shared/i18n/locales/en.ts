@@ -15,7 +15,7 @@ export const en: Content = {
   brandTagline: "Resume Page",
   hero: {
     greeting: "Hi, I'm Kayblis.",
-    titleLines: ["Front-end Developer", "& Storyteller"],
+    titleLines: ["A Front-end", "Developer"],
     tagline: `I build scalable web experiences with clean ${CO_DE}, beautiful UI, and meaningful stories.`,
     viewWork: "VIEW MY WORK",
     contact: "CONTACT ME",
@@ -111,5 +111,6 @@ export const en: Content = {
     wechat: "WeChat",
     email: "Email",
     phone: "Phone",
+    copied: "Copied!",
   },
 };
