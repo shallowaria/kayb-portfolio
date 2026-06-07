@@ -1,5 +1,6 @@
 import { Mail } from 'lucide-react'
 
+import { cn } from '@/shared/lib/utils'
 import { GithubIcon, TwitterIcon } from '@/shared/components/icons/brand-icons'
 import { BilibiliIcon } from '@/shared/components/icons/bilibili-icon'
 import { useContent } from '@/shared/i18n/use-content'
@@ -9,10 +10,34 @@ export function SiteFooter() {
   const content = useContent()
 
   const socials = [
-    { label: 'GitHub', href: siteConfig.social.github, Icon: GithubIcon },
-    { label: 'Twitter', href: siteConfig.social.twitter, Icon: TwitterIcon },
-    { label: 'Bilibili', href: siteConfig.social.bilibili, Icon: BilibiliIcon },
-    { label: 'Email', href: `mailto:${siteConfig.email}`, Icon: Mail },
+    {
+      label: 'GitHub',
+      href: siteConfig.social.github,
+      Icon: GithubIcon,
+      iconClass: 'text-[#181717] dark:text-white',
+      fillClass: 'bg-[#181717]',
+    },
+    {
+      label: 'Twitter',
+      href: siteConfig.social.twitter,
+      Icon: TwitterIcon,
+      iconClass: 'text-[#1d9bf0]',
+      fillClass: 'bg-[#1d9bf0]',
+    },
+    {
+      label: 'Bilibili',
+      href: siteConfig.social.bilibili,
+      Icon: BilibiliIcon,
+      iconClass: 'text-[#fb7299]',
+      fillClass: 'bg-[#fb7299]',
+    },
+    {
+      label: 'Email',
+      href: `mailto:${siteConfig.email}`,
+      Icon: Mail,
+      iconClass: 'text-primary',
+      fillClass: 'bg-primary',
+    },
   ]
 
   return (
@@ -22,17 +47,29 @@ export function SiteFooter() {
           © {new Date().getFullYear()} {content.name} {content.brandTagline}.{' '}
           {content.footer.rights}
         </p>
-        <div className="flex items-center gap-3">
-          {socials.map(({ label, href, Icon }) => (
+        <div className="flex items-center gap-2">
+          {socials.map(({ label, href, Icon, iconClass, fillClass }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+              className="group/social relative flex size-9 items-center justify-center overflow-hidden rounded-xl transition-transform duration-300 hover:scale-110"
             >
-              <Icon className="size-[18px]" />
+              <Icon
+                className={cn(
+                  'relative z-10 size-[18px] transition-colors duration-300 group-hover/social:text-white',
+                  iconClass,
+                )}
+              />
+              {/* Brand-coloured fill sweeping in from the left on hover. */}
+              <span
+                className={cn(
+                  'absolute inset-0 z-0 -translate-x-full rounded-xl transition-transform duration-300 ease-out group-hover/social:translate-x-0',
+                  fillClass,
+                )}
+              />
             </a>
           ))}
         </div>

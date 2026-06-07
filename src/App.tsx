@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "sonner";
 
 import { SiteHeader } from "@/shared/components/layout/site-header";
@@ -5,8 +6,16 @@ import { HomePage } from "@/features/home/home-page";
 import { TornFilter } from "@/shared/components/torn-filter";
 import { ResponsiveImage } from "@/shared/components/responsive-image";
 import { siteConfig } from "@/shared/config/site";
+import { useContent } from "@/shared/i18n/use-content";
 
 function App() {
+  const content = useContent();
+
+  // Keep the browser tab title in sync with the active language.
+  useEffect(() => {
+    document.title = content.documentTitle;
+  }, [content.documentTitle]);
+
   return (
     <div className="relative min-h-svh w-full">
       <TornFilter />
@@ -30,7 +39,7 @@ function App() {
           sizes={siteConfig.images.hero.sizes}
           width={siteConfig.images.hero.width}
           height={siteConfig.images.hero.height}
-          className="absolute inset-y-0 left-[-500px] h-full w-[calc(100%+500px)] max-w-none object-cover"
+          className="absolute inset-y-0  h-full w-[calc(100%+150px)] max-w-none object-cover"
         />
       </div>
       {/* Dims the forest in dark mode. */}

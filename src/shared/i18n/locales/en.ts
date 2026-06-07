@@ -14,6 +14,7 @@ export const en: Content = {
   },
   name: "Kayb",
   brandTagline: "Resume Page",
+  documentTitle: "Kayb · Front-end Developer",
   hero: {
     greeting: "Hi, I'm Kayb.",
     titleLines: "A Front-end Developer",

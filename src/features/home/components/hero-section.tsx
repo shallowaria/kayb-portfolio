@@ -43,7 +43,7 @@ export function HeroSection() {
           gets a soft glow so it stays legible without a hazy overlay. */}
       <FloatingSeeds className="-z-10" count={16} />
 
-      <div className="mx-auto max-w-6xl px-6 pb-32 pt-44 md:px-10 md:pb-40 md:pt-52">
+      <div className="mx-auto max-w-6xl px-6 pb-32 pt-32 md:px-10 md:pb-40 md:pt-52">
         <div className="max-w-xl max-lg:[text-shadow:0_1px_14px_rgb(255_255_255_/_0.9)] dark:max-lg:[text-shadow:0_1px_14px_rgb(0_0_0_/_0.7)]">
           <motion.p
             {...fade}

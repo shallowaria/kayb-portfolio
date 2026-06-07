@@ -32,6 +32,8 @@ export interface Content {
   };
   name: string;
   brandTagline: string;
+  /** Text shown in the browser tab / <title>. */
+  documentTitle: string;
   hero: {
     greeting: string;
     titleLines: string;

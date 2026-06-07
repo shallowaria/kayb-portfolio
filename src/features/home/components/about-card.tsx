@@ -1,6 +1,5 @@
 import { MapPin, Mail, Globe } from 'lucide-react'
 
-import { BorderBeam } from '@/shared/components/magicui/border-beam'
 import { ResponsiveImage } from '@/shared/components/responsive-image'
 import { useContent } from '@/shared/i18n/use-content'
 import { siteConfig } from '@/shared/config/site'
@@ -64,8 +63,6 @@ export function AboutCard() {
           </li>
         </ul>
       </div>
-
-      <BorderBeam image="/scrollbar-thumb.png" size={44} duration={9} />
     </PaperSection>
   )
 }
