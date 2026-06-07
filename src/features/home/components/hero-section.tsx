@@ -16,6 +16,9 @@ export function HeroSection() {
   const content = useContent();
   const { hero } = content;
 
+  const goTo = (id: string) => () =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
   return (
     <section
       id="top"
@@ -24,10 +27,10 @@ export function HeroSection() {
     >
       {/* Solid sage text panel (rgb 230,236,226) occupying the left, with a
           softly feathered right edge so the forest — and its trunk — take over
-          the right side and divide the header. */}
+          the right side and divide the header. Desktop only. */}
       <div
         aria-hidden
-        className="absolute inset-y-0 left-0 -z-10 w-[60%] min-w-[340px]"
+        className="absolute inset-y-0 left-0 -z-10 hidden w-[60%] min-w-[340px] lg:block"
         style={{
           backgroundColor: "rgb(var(--hero-panel))",
           maskImage:
@@ -35,6 +38,12 @@ export function HeroSection() {
           WebkitMaskImage:
             "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
         }}
+      />
+      {/* Mobile: no panel/weeds — show the forest uniformly with a light wash
+          so the copy stays legible. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-background/45 lg:hidden"
       />
       <FloatingSeeds className="-z-10" count={16} />
 
@@ -68,18 +77,19 @@ export function HeroSection() {
           <motion.div
             {...fade}
             transition={{ duration: 0.6, delay: 0.24 }}
-            className="mt-9 flex flex-wrap items-center gap-4"
+            className="mt-9 flex items-center gap-3"
           >
             <ShimmerButton
-              className="h-12 min-w-[160px] justify-center rounded-full border-transparent px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20"
+              onClick={goTo("projects")}
+              className="h-12 min-w-[160px] justify-center rounded-full border-transparent px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/20 max-lg:min-w-0 max-lg:flex-1"
               shimmerColor="#d9fbe8"
             >
-              <a href="#projects">{hero.viewWork}</a>
+              {hero.viewWork}
             </ShimmerButton>
             <Button
               asChild
               variant="outline"
-              className="h-12 min-w-[160px] justify-center rounded-full border-2 border-black px-8 text-sm font-medium tracking-wide"
+              className="h-12 min-w-[160px] justify-center rounded-full border-2 border-black px-8 text-sm font-medium tracking-wide max-lg:min-w-0 max-lg:flex-1"
             >
               <a href="#contact">{hero.contact}</a>
             </Button>
@@ -87,8 +97,8 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Weeds reclaiming the seam between hero and parchment. */}
-      <GrassDivider />
+      {/* Weeds reclaiming the seam between hero and parchment (desktop only). */}
+      <GrassDivider className="max-lg:hidden" />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Download, Menu, X } from 'lucide-react'
 
@@ -53,6 +53,18 @@ export function SiteHeader() {
     { key: 'contact', label: content.nav.contact, href: '#contact' },
   ]
 
+  const handleNavClick = (
+    e: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    const id = href.slice(1)
+    requestAnimationFrame(() =>
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }),
+    )
+  }
+
   return (
     <header
       data-parchment={overParchment ? 'true' : 'false'}
@@ -62,9 +74,9 @@ export function SiteHeader() {
         overParchment
           ? // Over parchment: light-green → sky-blue gradient bar.
             'border-b border-border/30 bg-gradient-to-r from-emerald-100/90 to-sky-200/90 backdrop-blur-md dark:from-emerald-950/85 dark:to-sky-950/85'
-          : scrolled
-            ? // Scrolled but still over the hero: blur only on mobile for legibility.
-              'border-b border-transparent max-lg:border-border/30 max-lg:bg-background/65 max-lg:backdrop-blur-md'
+          : scrolled || menuOpen
+            ? // Scrolled, or menu open: frosted bar on mobile for legibility.
+              'border-b border-transparent max-lg:border-border/30 max-lg:bg-background/70 max-lg:backdrop-blur-md'
             : 'border-b border-transparent',
       )}
     >
@@ -145,7 +157,8 @@ export function SiteHeader() {
       {/* Single shared command palette */}
       <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
 
-      {/* Mobile menu */}
+      {/* Mobile menu — absolutely positioned so opening/closing never shifts
+          the page content (no jump). */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -153,14 +166,14 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="overflow-hidden border-t border-border/50 bg-background/90 backdrop-blur-md lg:hidden"
+            className="absolute inset-x-0 top-full overflow-hidden border-t border-border/50 bg-background/95 backdrop-blur-md lg:hidden"
           >
             <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
               {navItems.map((item) => (
                 <a
                   key={item.key}
                   href={item.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   {item.label}

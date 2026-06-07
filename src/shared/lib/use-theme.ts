@@ -79,7 +79,8 @@ export function useTheme() {
           const opts = {
             duration: 520,
             easing: 'ease-in-out',
-          } as const
+            fill: 'forwards' as const,
+          }
           if (goingDark) {
             // Dark expands outward from the click point.
             root.animate(
