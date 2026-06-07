@@ -10,7 +10,7 @@ export const zh: Content = {
   },
   name: "凯布",
   brandTagline: "求职页",
-  documentTitle: "凯布 · 前端新人",
+  documentTitle: "凯布 · 前端求职页",
   hero: {
     greeting: "你好，我是凯布。",
     titleLines: "是一名前端开发者",
