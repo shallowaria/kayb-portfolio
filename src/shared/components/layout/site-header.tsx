@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Download, Menu, X } from 'lucide-react'
 
@@ -15,11 +15,20 @@ import { siteConfig } from '@/shared/config/site'
 export function SiteHeader() {
   const content = useContent()
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const lastY = useRef(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 8)
+      // Slide the bar up when scrolling down, reveal it when scrolling up.
+      if (y > lastY.current && y > 96) setHidden(true)
+      else if (y < lastY.current) setHidden(false)
+      lastY.current = y
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -27,7 +36,6 @@ export function SiteHeader() {
 
   const navItems = [
     { key: 'home', label: content.nav.home, href: '#top' },
-    { key: 'about', label: content.nav.about, href: '#about' },
     { key: 'experience', label: content.nav.experience, href: '#experience' },
     { key: 'projects', label: content.nav.projects, href: '#projects' },
     { key: 'contact', label: content.nav.contact, href: '#contact' },
@@ -37,10 +45,8 @@ export function SiteHeader() {
     <header
       data-scrolled={scrolled ? 'true' : 'false'}
       className={cn(
-        'group/header sticky top-0 z-40 transition-colors duration-300',
-        scrolled
-          ? 'border-b border-border/50 bg-background/70 shadow-[0_8px_30px_-18px_rgba(20,40,30,0.5)] backdrop-blur-md'
-          : 'border-b border-transparent',
+        'group/header sticky top-0 z-40 transition-transform duration-300 ease-out',
+        hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0',
       )}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">

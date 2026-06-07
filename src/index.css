@@ -229,4 +229,32 @@ html.vt-to-light::view-transition-new(root) {
   z-index: 1;
 }
 
+/* ---- Custom scrollbar (image thumb) ---- */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-image: url('/scrollbar-thumb.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+}
+/* Firefox can't use an image thumb — fall back to a themed colour. */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: oklch(0.55 0.09 160) transparent;
+    scrollbar-width: thin;
+  }
+}
+
 
