@@ -12,10 +12,11 @@ export const en: Content = {
     projects: "PROJECTS",
     contact: "CONTACT",
   },
+  name: "Kayb",
   brandTagline: "Resume Page",
   hero: {
-    greeting: "Hi, I'm Kayblis.",
-    titleLines: ["A Front-end", "Developer"],
+    greeting: "Hi, I'm Kayb.",
+    titleLines: "A Front-end Developer",
     tagline: `I build scalable web experiences with clean ${CO_DE}, beautiful UI, and meaningful stories.`,
     viewWork: "VIEW MY WORK",
     contact: "CONTACT ME",
@@ -53,6 +54,7 @@ export const en: Content = {
       period: "2022 – Present",
       summary:
         "Lead the development of scalable web applications. Focus on performance, accessibility, and delightful UI.",
+      logo: "/experience/greenleaf.png",
     },
     {
       role: "Front-end Developer",
@@ -60,6 +62,7 @@ export const en: Content = {
       period: "2019 – 2022",
       summary:
         "Built responsive interfaces and design systems. Collaborated with designers and back-end engineers.",
+      logo: "/experience/stonepeak.png",
     },
   ],
   projects: [

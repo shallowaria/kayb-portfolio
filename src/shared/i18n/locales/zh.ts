@@ -8,10 +8,11 @@ export const zh: Content = {
     projects: "项目",
     contact: "联系",
   },
+  name: "凯布",
   brandTagline: "求职页",
   hero: {
-    greeting: "你好，我是 Kayblis。",
-    titleLines: ["是一名", "前端开发者"],
+    greeting: "你好，我是凯布。",
+    titleLines: "是一名前端开发者",
     tagline:
       "我用整洁的代码、精致的界面与有温度的故事，构建可扩展的 Web 体验。",
     viewWork: "查看作品",
@@ -50,12 +51,14 @@ export const zh: Content = {
       period: "2022 – 至今",
       summary:
         "主导可扩展 Web 应用的开发，专注于性能、无障碍与令人愉悦的界面体验。",
+      logo: "/experience/greenleaf.png",
     },
     {
       role: "前端开发工程师",
       company: "Stonepeak Labs",
       period: "2019 – 2022",
       summary: "构建响应式界面与设计系统，与设计师及后端工程师紧密协作。",
+      logo: "/experience/stonepeak.png",
     },
   ],
   projects: [

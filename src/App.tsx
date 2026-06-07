@@ -1,3 +1,5 @@
+import { Toaster } from "sonner";
+
 import { SiteHeader } from "@/shared/components/layout/site-header";
 import { HomePage } from "@/features/home/home-page";
 import { TornFilter } from "@/shared/components/torn-filter";
@@ -44,6 +46,8 @@ function App() {
           <HomePage />
         </main>
       </div>
+
+      <Toaster richColors position="bottom-right" />
     </div>
   );
 }

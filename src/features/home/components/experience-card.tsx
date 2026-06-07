@@ -1,5 +1,6 @@
 import { Leaf } from 'lucide-react'
 
+import { ResponsiveImage } from '@/shared/components/responsive-image'
 import { useContent } from '@/shared/i18n/use-content'
 import { PaperSection } from '@/features/home/components/paper-section'
 
@@ -11,8 +12,15 @@ export function ExperienceCard() {
       <div className="divide-y divide-amber-900/10">
         {content.experiences.map((exp) => (
           <div key={exp.role} className="flex gap-4 py-5 first:pt-0 last:pb-0">
-            <span className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full border border-amber-900/15 bg-background/40 text-primary">
+            <span className="relative mt-0.5 flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-amber-900/15 bg-background/40 text-primary">
               <Leaf className="size-4" />
+              <ResponsiveImage
+                src={exp.logo}
+                sizes="40px"
+                width={80}
+                height={80}
+                className="absolute inset-0 size-full object-cover"
+              />
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3">

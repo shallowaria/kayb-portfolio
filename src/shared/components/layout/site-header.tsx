@@ -73,7 +73,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-8">
           <a href="#top" className="leading-tight">
             <div className="font-display text-xl font-semibold tracking-tight text-foreground">
-              {siteConfig.name.toUpperCase()}
+              {content.name.toUpperCase()}
             </div>
             {/* dual-language sizer keeps the brand width fixed across locales */}
             <div className="grid text-[0.6rem] font-medium tracking-[0.45em] text-muted-foreground">

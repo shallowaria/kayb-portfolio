@@ -1,20 +1,20 @@
-import { Leaf } from 'lucide-react'
-import { motion } from 'motion/react'
+import { Leaf } from "lucide-react";
+import { motion } from "motion/react";
 
-import { Button } from '@/shared/components/ui/button'
-import { ShimmerButton } from '@/shared/components/magicui/shimmer-button'
-import { FloatingSeeds } from '@/shared/components/magicui/floating-seeds'
-import { GrassDivider } from '@/features/home/components/grass-divider'
-import { useContent } from '@/shared/i18n/use-content'
+import { Button } from "@/shared/components/ui/button";
+import { ShimmerButton } from "@/shared/components/magicui/shimmer-button";
+import { FloatingSeeds } from "@/shared/components/magicui/floating-seeds";
+import { GrassDivider } from "@/features/home/components/grass-divider";
+import { useContent } from "@/shared/i18n/use-content";
 
 const fade = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-}
+};
 
 export function HeroSection() {
-  const content = useContent()
-  const { hero } = content
+  const content = useContent();
+  const { hero } = content;
 
   return (
     <section
@@ -29,11 +29,11 @@ export function HeroSection() {
         aria-hidden
         className="absolute inset-y-0 left-0 -z-10 w-[60%] min-w-[340px]"
         style={{
-          backgroundColor: 'rgb(var(--hero-panel))',
+          backgroundColor: "rgb(var(--hero-panel))",
           maskImage:
-            'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+            "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
           WebkitMaskImage:
-            'linear-gradient(to right, #000 0%, #000 72%, transparent 100%)',
+            "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
         }}
       />
       <FloatingSeeds className="-z-10" count={16} />
@@ -54,9 +54,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.08 }}
             className="font-display text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl"
           >
-            {hero.titleLines[0]}
-            <br />
-            {hero.titleLines[1]}
+            {hero.titleLines}
           </motion.h1>
 
           <motion.p
@@ -92,5 +90,5 @@ export function HeroSection() {
       {/* Weeds reclaiming the seam between hero and parchment. */}
       <GrassDivider />
     </section>
-  )
+  );
 }

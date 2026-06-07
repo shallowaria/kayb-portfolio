@@ -237,8 +237,8 @@ html.vt-to-light::view-transition-new(root) {
 
 /* ---- Custom scrollbar (image thumb) ---- */
 ::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -249,18 +249,12 @@ html.vt-to-light::view-transition-new(root) {
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 9999px;
-  border: 3px solid transparent;
+  border: 2px solid transparent;
   background-clip: padding-box;
+  min-height: 56px;
 }
-::-webkit-scrollbar-thumb:hover {
-  border-width: 2px;
-}
-/* Firefox can't use an image thumb — fall back to a themed colour. */
-@supports (scrollbar-color: auto) {
-  html {
-    scrollbar-color: oklch(0.55 0.09 160) transparent;
-    scrollbar-width: thin;
-  }
-}
+/* NOTE: do not set the standard `scrollbar-width`/`scrollbar-color` here —
+   modern Chromium honours them and then ignores the ::-webkit-scrollbar image
+   thumb above. Firefox keeps its default scrollbar (no image support). */
 
 
