@@ -90,8 +90,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Fraunces', 'Inter', ui-serif, serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', 'Inter Variable', ui-serif, serif;
 
   /* MagicUI helpers */
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
