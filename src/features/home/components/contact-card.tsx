@@ -62,7 +62,12 @@ export function ContactCard() {
       panelClassName="relative flex flex-1 flex-col justify-center overflow-hidden"
     >
       {/* The little wanderer lives here now — loops the border, fully visible. */}
-      <TravelingImage src="/scrollbar-thumb.png" size={48} duration={18} />
+      <TravelingImage
+        src={siteConfig.images.scrollbarThumb.src}
+        srcSet={siteConfig.images.scrollbarThumb.srcSet}
+        size={48}
+        duration={18}
+      />
 
       <ul className="relative z-10 grid gap-5 sm:grid-cols-2">
         {/* QQ / WeChat — click the number or the button to copy */}

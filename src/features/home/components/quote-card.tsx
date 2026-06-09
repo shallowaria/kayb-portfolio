@@ -1,6 +1,8 @@
 import { Quote } from 'lucide-react'
 
 import { useContent } from '@/shared/i18n/use-content'
+import { siteConfig } from '@/shared/config/site'
+import { ResponsiveImage } from '@/shared/components/responsive-image'
 import { PaperSection } from '@/features/home/components/paper-section'
 
 export function QuoteCard() {
@@ -11,13 +13,11 @@ export function QuoteCard() {
       title={content.sections.quote}
       panelClassName="relative overflow-hidden"
     >
-      {/* Foliage reclaiming the corner. */}
-      <img
-        src="/quote-foliage.png"
-        alt=""
-        aria-hidden
-        loading="lazy"
-        decoding="async"
+      {/* Foliage reclaiming the corner — alt="" keeps it decorative. */}
+      <ResponsiveImage
+        src={siteConfig.images.quote.src}
+        srcSet={siteConfig.images.quote.srcSet}
+        sizes={siteConfig.images.quote.sizes}
         className="pointer-events-none absolute bottom-0 right-0 w-40 select-none object-contain opacity-95 sm:w-48"
       />
 

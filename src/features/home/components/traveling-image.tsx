@@ -4,6 +4,8 @@ import { cn } from '@/shared/lib/utils'
 
 interface TravelingImageProps {
   src: string
+  /** Width-resized WebP variants so the browser fetches only what it renders. */
+  srcSet?: string
   /** Square size in px. */
   size?: number
   /** Seconds for one full lap. */
@@ -18,6 +20,7 @@ interface TravelingImageProps {
  */
 export function TravelingImage({
   src,
+  srcSet,
   size = 48,
   duration = 16,
   className,
@@ -26,8 +29,12 @@ export function TravelingImage({
   return (
     <motion.img
       src={src}
+      srcSet={srcSet}
+      sizes={`${size}px`}
       alt=""
       aria-hidden
+      loading="lazy"
+      decoding="async"
       className={cn(
         'pointer-events-none absolute left-0 top-0 select-none object-contain',
         className,

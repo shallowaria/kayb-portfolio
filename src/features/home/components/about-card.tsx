@@ -23,6 +23,7 @@ export function AboutCard() {
         }}
       >
         <ResponsiveImage
+          eager
           src={siteConfig.images.about.src}
           srcSet={siteConfig.images.about.srcSet}
           sizes={siteConfig.images.about.sizes}
