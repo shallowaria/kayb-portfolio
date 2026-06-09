@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
 import {
-  Search,
   User,
   Briefcase,
   FolderGit2,
@@ -9,7 +7,6 @@ import {
   ArrowUpRight,
 } from 'lucide-react'
 
-import { cn } from '@/shared/lib/utils'
 import {
   CommandDialog,
   CommandEmpty,
@@ -20,33 +17,11 @@ import {
 } from '@/shared/components/ui/command'
 import { useContent } from '@/shared/i18n/use-content'
 
-/** Icon trigger — render as many as needed (desktop + mobile). */
-export function SearchButton({
-  onClick,
-  label,
-  className,
-}: {
-  onClick: () => void
-  label: string
-  className?: string
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className={cn(
-        'flex size-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-primary/10',
-        className,
-      )}
-    >
-      <Search className="size-[18px]" />
-    </button>
-  )
-}
-
-/** The single, controlled command palette. Mounted once per page. */
-export function SearchCommand({
+/**
+ * The single, controlled command palette. Loaded lazily (cmdk + Radix dialog)
+ * the first time the user opens search, so it stays out of the initial bundle.
+ */
+export default function SearchCommand({
   open,
   onOpenChange,
 }: {
@@ -54,17 +29,6 @@ export function SearchCommand({
   onOpenChange: (open: boolean) => void
 }) {
   const content = useContent()
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        onOpenChange(!open)
-      }
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [open, onOpenChange])
 
   const goToAnchor = (id: string) => {
     onOpenChange(false)

@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  lazy,
+  Suspense,
+  type MouseEvent,
+} from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Download, Menu, X } from "lucide-react";
 
@@ -11,10 +18,15 @@ import {
   headerActionToneDesktop,
   headerActionToneMobile,
 } from "@/shared/components/layout/action-tone";
-import { SearchButton, SearchCommand } from "@/features/search/site-search";
+import { SearchButton } from "@/features/search/search-button";
 import { useContent } from "@/shared/i18n/use-content";
 import { resources } from "@/shared/i18n/resources";
 import { siteConfig } from "@/shared/config/site";
+
+// Command palette (cmdk + Radix dialog) is split into its own chunk and only
+// fetched the first time the user opens search — keeping it out of the initial
+// bundle and off the critical path.
+const SearchCommand = lazy(() => import("@/features/search/site-search"));
 
 export function SiteHeader() {
   const content = useContent();
@@ -23,7 +35,29 @@ export function SiteHeader() {
   const [overParchment, setOverParchment] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  // Stays true once search has been opened, so the lazy chunk mounts on demand
+  // and isn't torn down when the palette closes.
+  const [searchLoaded, setSearchLoaded] = useState(false);
   const lastY = useRef(0);
+
+  const openSearch = () => {
+    setSearchLoaded(true);
+    setSearchOpen(true);
+  };
+
+  // Cmd/Ctrl+K opens the palette. Lives here (not in the lazy component) so the
+  // shortcut works before the chunk has loaded.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setSearchLoaded(true);
+        setSearchOpen((v) => !v);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -111,7 +145,7 @@ export function SiteHeader() {
             trunk in the backdrop) */}
         <div className="hidden items-center gap-2 lg:flex">
           <SearchButton
-            onClick={() => setSearchOpen(true)}
+            onClick={openSearch}
             label={content.search.label}
             className={headerActionToneDesktop}
           />
@@ -133,7 +167,7 @@ export function SiteHeader() {
         {/* Mobile actions */}
         <div className="flex items-center gap-1 lg:hidden">
           <SearchButton
-            onClick={() => setSearchOpen(true)}
+            onClick={openSearch}
             label={content.search.label}
             className={headerActionToneMobile}
           />
@@ -151,8 +185,12 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Single shared command palette */}
-      <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+      {/* Single shared command palette — mounted lazily after first open. */}
+      {searchLoaded && (
+        <Suspense fallback={null}>
+          <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+        </Suspense>
+      )}
 
       {/* Mobile menu — absolutely positioned so opening/closing never shifts
           the page content (no jump). */}

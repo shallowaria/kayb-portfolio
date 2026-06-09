@@ -17,8 +17,8 @@ const outDir = path.join(root, 'public')
 // width: the pixel widths to emit (skipped if larger than the source).
 // quality: WebP quality 0-100. Decorative art tolerates a lower number.
 const targets = [
-  { file: 'hero-bg.png', widths: [480, 768, 1078], quality: 74 },
-  { file: 'about-portrait.png', widths: [384, 640, 768], quality: 78 },
+  { file: 'hero-bg.png', widths: [480, 768, 1078], quality: 58 },
+  { file: 'about-portrait.png', widths: [384, 640, 768], quality: 62 },
   { file: 'quote-foliage.png', widths: [192, 384], quality: 72 },
   { file: 'scrollbar-thumb.png', widths: [96, 192], quality: 80 },
 ]
