@@ -1,0 +1,199 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - banner [ref=e6]:
+      - generic [ref=e7]:
+        - link "凯布 求职页" [ref=e9] [cursor=pointer]:
+          - /url: "#top"
+          - generic [ref=e10]: 凯布
+          - generic [ref=e12]: 求职页
+        - generic [ref=e13]:
+          - button "搜索" [ref=e14] [cursor=pointer]:
+            - img [ref=e15]
+          - button "语言" [ref=e19] [cursor=pointer]:
+            - img [ref=e20]
+          - button "Switch to dark mode" [ref=e24] [cursor=pointer]:
+            - img [ref=e25]
+          - button "Toggle menu" [ref=e27]:
+            - img [ref=e28]
+    - main [ref=e29]:
+      - region "Intro" [ref=e30]:
+        - generic [ref=e32]:
+          - paragraph [ref=e33]:
+            - text: 你好，我是凯布。
+            - img [ref=e34]
+          - heading "是一名前端开发者" [level=1] [ref=e37]
+          - paragraph [ref=e38]: 我用整洁的代码、精致的界面与有温度的故事，构建可扩展的 Web 体验。
+          - generic [ref=e39]:
+            - button "查看作品" [ref=e40] [cursor=pointer]: 查看作品
+            - link "联系我" [ref=e46] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e49]:
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e54]:
+              - heading "关于我" [level=2] [ref=e56]: 关于我
+              - generic [ref=e60]:
+                - generic [ref=e61]:
+                  - paragraph [ref=e62]: 一名热爱整洁代码、精致 UI 与有意义动画的前端开发者。
+                  - paragraph [ref=e63]: 我喜欢把想法打磨成令人愉悦的 Web 体验。
+                - list [ref=e64]:
+                  - listitem [ref=e65]:
+                    - img [ref=e66]
+                    - text: 地球
+                  - listitem [ref=e69]:
+                    - img [ref=e70]
+                    - link "shallowaria@gmail.com" [ref=e73] [cursor=pointer]:
+                      - /url: mailto:shallowaria@gmail.com
+                  - listitem [ref=e74]:
+                    - img [ref=e75]
+                    - link "www.kayblis.dev" [ref=e78] [cursor=pointer]:
+                      - /url: https://www.kayblis.dev
+            - generic [ref=e80]:
+              - heading "技能" [level=2] [ref=e82]: 技能
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - paragraph [ref=e87]: 基础
+                  - generic [ref=e88]:
+                    - link "HTML" [ref=e89] [cursor=pointer]:
+                      - /url: https://developer.mozilla.org/docs/Web/HTML
+                    - link "CSS" [ref=e90] [cursor=pointer]:
+                      - /url: https://developer.mozilla.org/docs/Web/CSS
+                    - link "JavaScript" [ref=e91] [cursor=pointer]:
+                      - /url: https://developer.mozilla.org/docs/Web/JavaScript
+                    - link "TypeScript" [ref=e92] [cursor=pointer]:
+                      - /url: https://www.typescriptlang.org/docs/
+                - generic [ref=e93]:
+                  - paragraph [ref=e94]: 框架
+                  - generic [ref=e95]:
+                    - link "React" [ref=e96] [cursor=pointer]:
+                      - /url: https://react.dev/
+                    - link "Vue" [ref=e97] [cursor=pointer]:
+                      - /url: https://vuejs.org/guide/introduction.html
+                    - link "Next.js" [ref=e98] [cursor=pointer]:
+                      - /url: https://nextjs.org/docs
+                - generic [ref=e99]:
+                  - paragraph [ref=e100]: 状态管理
+                  - generic [ref=e101]:
+                    - link "Zustand" [ref=e102] [cursor=pointer]:
+                      - /url: https://zustand.docs.pmnd.rs/
+                    - link "TanStack Query" [ref=e103] [cursor=pointer]:
+                      - /url: https://tanstack.com/query/latest
+                    - link "Context" [ref=e104] [cursor=pointer]:
+                      - /url: https://react.dev/reference/react/useContext
+                - generic [ref=e105]:
+                  - paragraph [ref=e106]: 工具
+                  - generic [ref=e107]:
+                    - link "Tailwind CSS" [ref=e108] [cursor=pointer]:
+                      - /url: https://tailwindcss.com/docs
+                    - link "Sass" [ref=e109] [cursor=pointer]:
+                      - /url: https://sass-lang.com/documentation/
+                    - link "Vite" [ref=e110] [cursor=pointer]:
+                      - /url: https://vite.dev/
+                    - link "Git" [ref=e111] [cursor=pointer]:
+                      - /url: https://git-scm.com/doc
+                    - link "Jest" [ref=e112] [cursor=pointer]:
+                      - /url: https://jestjs.io/docs/getting-started
+                    - link "Figma" [ref=e113] [cursor=pointer]:
+                      - /url: https://help.figma.com/
+            - generic [ref=e115]:
+              - heading "教育经历" [level=2] [ref=e117]: 教育经历
+              - generic [ref=e121]:
+                - img [ref=e123]
+                - generic [ref=e126]:
+                  - paragraph [ref=e127]: 计算机科学学士
+                  - paragraph [ref=e128]: Greenfield University
+                  - paragraph [ref=e129]: 2015 – 2019
+          - generic [ref=e130]:
+            - generic [ref=e132]:
+              - heading "工作经历" [level=2] [ref=e134]: 工作经历
+              - generic [ref=e137]:
+                - generic [ref=e138]:
+                  - img [ref=e140]
+                  - generic [ref=e143]:
+                    - generic [ref=e144]:
+                      - heading "高级前端开发工程师" [level=3] [ref=e145]
+                      - generic [ref=e146]: 2022 – 至今
+                    - paragraph [ref=e147]: Greenleaf Studio
+                    - paragraph [ref=e148]: 主导可扩展 Web 应用的开发，专注于性能、无障碍与令人愉悦的界面体验。
+                - generic [ref=e149]:
+                  - img [ref=e151]
+                  - generic [ref=e154]:
+                    - generic [ref=e155]:
+                      - heading "前端开发工程师" [level=3] [ref=e156]
+                      - generic [ref=e157]: 2019 – 2022
+                    - paragraph [ref=e158]: Stonepeak Labs
+                    - paragraph [ref=e159]: 构建响应式界面与设计系统，与设计师及后端工程师紧密协作。
+            - generic [ref=e161]:
+              - heading "精选项目" [level=2] [ref=e163]: 精选项目
+              - generic [ref=e165]:
+                - link "Scavenger 博客 一个为讲述者与梦想家打造的前端博客，使用 Next.js、Tailwind CSS 与 MDX 构建。 scavenger-blog.vercel.app" [ref=e167] [cursor=pointer]:
+                  - /url: https://scavenger-blog.vercel.app
+                  - generic [ref=e169]:
+                    - heading "Scavenger 博客" [level=3] [ref=e170]
+                    - paragraph [ref=e171]: 一个为讲述者与梦想家打造的前端博客，使用 Next.js、Tailwind CSS 与 MDX 构建。
+                    - generic [ref=e172]:
+                      - text: scavenger-blog.vercel.app
+                      - img [ref=e173]
+                - link "Wilderness UI Kit 一套受自然启发的 Web 与移动端 UI 套件，使用 Figma 设计、React 实现。 wilderness-ui-kit.vercel.app" [ref=e178] [cursor=pointer]:
+                  - /url: https://wilderness-ui-kit.vercel.app
+                  - generic [ref=e180]:
+                    - heading "Wilderness UI Kit" [level=3] [ref=e181]
+                    - paragraph [ref=e182]: 一套受自然启发的 Web 与移动端 UI 套件，使用 Figma 设计、React 实现。
+                    - generic [ref=e183]:
+                      - text: wilderness-ui-kit.vercel.app
+                      - img [ref=e184]
+            - generic [ref=e189]:
+              - heading "箴言" [level=2] [ref=e191]: 箴言
+              - generic [ref=e194]:
+                - img [ref=e195]
+                - paragraph [ref=e198]: i pensieri stretti & il viso sciolto
+                - paragraph [ref=e199]: — 保罗·格雷厄姆
+            - generic [ref=e201]:
+              - heading "联系方式" [level=2] [ref=e203]: 联系方式
+              - generic [ref=e205]:
+                - img
+                - list [ref=e206]:
+                  - listitem [ref=e207]:
+                    - img [ref=e209]
+                    - generic [ref=e211]:
+                      - paragraph [ref=e212]: QQ
+                      - generic [ref=e213]:
+                        - button "123456789" [ref=e214] [cursor=pointer]
+                        - button "Copy QQ" [ref=e215] [cursor=pointer]:
+                          - img [ref=e216]
+                  - listitem [ref=e219]:
+                    - img [ref=e221]
+                    - generic [ref=e223]:
+                      - paragraph [ref=e224]: 微信
+                      - generic [ref=e225]:
+                        - button "kayblis" [ref=e226] [cursor=pointer]
+                        - button "Copy 微信" [ref=e227] [cursor=pointer]:
+                          - img [ref=e228]
+                  - listitem [ref=e231]:
+                    - img [ref=e233]
+                    - generic [ref=e236]:
+                      - paragraph [ref=e237]: 邮箱
+                      - link "shallowaria@gmail.com" [ref=e238] [cursor=pointer]:
+                        - /url: mailto:shallowaria@gmail.com
+                  - listitem [ref=e239]:
+                    - img [ref=e241]
+                    - generic [ref=e243]:
+                      - paragraph [ref=e244]: 电话
+                      - link "+86 138 0000 0000" [ref=e245] [cursor=pointer]:
+                        - /url: tel:+8613800000000
+        - generic [ref=e247]:
+          - paragraph [ref=e248]: © 2026 凯布 求职页. 保留所有权利。
+          - generic [ref=e249]:
+            - link "GitHub" [ref=e250] [cursor=pointer]:
+              - /url: https://github.com/shallowaria
+              - img [ref=e251]
+            - link "Twitter" [ref=e254] [cursor=pointer]:
+              - /url: https://x.com/Kaybliscy
+              - img [ref=e255]
+            - link "Bilibili" [ref=e258] [cursor=pointer]:
+              - /url: https://space.bilibili.com/7213886
+              - img [ref=e259]
+            - link "Email" [ref=e264] [cursor=pointer]:
+              - /url: mailto:shallowaria@gmail.com
+              - img [ref=e265]
+  - region "Notifications alt+T"

@@ -39,6 +39,11 @@ export function SiteHeader() {
   // and isn't torn down when the palette closes.
   const [searchLoaded, setSearchLoaded] = useState(false);
   const lastY = useRef(0);
+  // Document-space top of #content-start, measured off the scroll path so the
+  // per-scroll handler can decide `overParchment` with arithmetic instead of a
+  // getBoundingClientRect() — that read was forcing a synchronous reflow on
+  // every scroll event.
+  const contentStartTop = useRef(Infinity);
 
   const openSearch = () => {
     setSearchLoaded(true);
@@ -60,6 +65,15 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    // Re-measured on mount / resize / load (fonts and images settle late and
+    // shift this offset), never inside onScroll.
+    const measure = () => {
+      const start = document.getElementById("content-start");
+      contentStartTop.current = start
+        ? start.getBoundingClientRect().top + window.scrollY
+        : Infinity;
+    };
+
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 8);
@@ -67,16 +81,24 @@ export function SiteHeader() {
       if (y > lastY.current && y > 96) setHidden(true);
       else if (y < lastY.current) setHidden(false);
       lastY.current = y;
-      // Has the header reached the parchment content yet? (header height = 80px)
-      const start = document.getElementById("content-start");
-      setOverParchment(start ? start.getBoundingClientRect().top <= 80 : false);
+      // Has the header (80px tall) reached the parchment content yet?
+      setOverParchment(y >= contentStartTop.current - 80);
     };
+
+    const onResize = () => {
+      measure();
+      onScroll();
+    };
+
+    measure();
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
+    window.addEventListener("load", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("load", onResize);
     };
   }, []);
 

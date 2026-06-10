@@ -9,6 +9,23 @@
       content="Kayb — Front-end Portfolio. A resume page showcasing Kayb's front-end development skills, projects, and experience."
     />
     <title>凯布 · 前端求职页</title>
+
+    <!--
+      Preload the portrait (the measured LCP element). It's rendered by React,
+      so without this the browser can't discover it until the JS bundle has
+      downloaded and executed — that was the ~14s "resource load delay". The
+      imagesrcset/imagesizes mirror the <img> exactly so only one variant is
+      fetched, and it starts downloading in parallel with the bundle.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      href="/about-portrait-768.webp"
+      imagesrcset="/about-portrait-384.webp 384w, /about-portrait-640.webp 640w, /about-portrait-768.webp 768w"
+      imagesizes="(min-width: 1024px) 340px, 100vw"
+      fetchpriority="high"
+    />
+
     <script>
       // Apply the saved theme before paint to avoid a flash of the wrong mode.
       (function () {
@@ -22,9 +39,114 @@
         } catch (e) {}
       })();
     </script>
+
+    <!--
+      Instant-paint splash. This site is a client-rendered SPA, so #root is
+      empty until the JS bundle downloads and executes — that was the ~10s
+      First Contentful Paint. This markup paints immediately from the HTML
+      (no JS, no fonts blocking), giving the user the brand + the same forest
+      gradient the app uses as its backdrop. React clears #root on its first
+      render, so the splash disappears the moment the app mounts.
+    -->
+    <style>
+      #splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-align: center;
+        /* Diagonal top-left → bottom-right: fresh green easing into sky blue. */
+        background: linear-gradient(
+          135deg,
+          oklch(0.86 0.09 162) 0%,
+          oklch(0.87 0.07 200) 62%,
+          oklch(0.88 0.07 232) 100%
+        );
+      }
+      /* The two lines sit in a group so the "breathing" loop animates them
+         together once both have settled in. */
+      #splash .splash-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "Fraunces Variable", ui-serif, Georgia, serif;
+        color: oklch(0.28 0.04 165);
+        /* Starts soon after both lines arrive so even a fast connection sees
+           it; delay keeps the first frame at full opacity so it doesn't push
+           FCP back. */
+        animation: splash-breathe 2.4s ease-in-out 0.6s infinite;
+      }
+      #splash .splash-line-1 {
+        font-size: clamp(1rem, 3.6vw, 1.5rem);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        /* Visible on the first painted frame — this is what FCP measures. */
+        opacity: 0.85;
+      }
+      #splash .splash-line-2 {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        /* Rises + fades in just after the first line. */
+        opacity: 0;
+        transform: translateY(14px);
+        animation: splash-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s
+          forwards;
+      }
+      @keyframes splash-rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes splash-breathe {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.55;
+          transform: scale(0.97);
+        }
+      }
+      .dark #splash {
+        background: linear-gradient(
+          135deg,
+          oklch(0.25 0.04 162) 0%,
+          oklch(0.27 0.045 200) 60%,
+          oklch(0.3 0.05 232) 100%
+        );
+      }
+      .dark #splash .splash-brand {
+        color: oklch(0.95 0.015 150);
+      }
+      /* Respect users who ask for less motion: show everything, animate nothing. */
+      @media (prefers-reduced-motion: reduce) {
+        #splash .splash-brand {
+          animation: none;
+        }
+        #splash .splash-line-2 {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="splash">
+        <div class="splash-brand">
+          <span class="splash-line-1">欢迎来到</span>
+          <span class="splash-line-2">凯布的求职页</span>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

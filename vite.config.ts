@@ -47,4 +47,23 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        /**
+         * Split the big third-party libs out of the app chunk. They change far
+         * less often than the app code, so a returning visitor re-downloads
+         * only what actually changed; on first load the browser can fetch these
+         * in parallel over HTTP/2 instead of as one serial 151 KiB blob.
+         */
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('/react-dom/') || id.includes('/scheduler/')) return 'react'
+          if (id.includes('/react/')) return 'react'
+          if (id.includes('/motion/') || id.includes('/framer-motion/')) return 'motion'
+          if (id.includes('/i18next/') || id.includes('/react-i18next/')) return 'i18n'
+        },
+      },
+    },
+  },
 })
