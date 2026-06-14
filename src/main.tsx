@@ -5,6 +5,11 @@ import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/inter'
 import '@fontsource-variable/fraunces'
 import '@fontsource-variable/fraunces/standard-italic.css'
+// LXGW WenKai (霞鹜文楷) — self-hosted, regular + bold only. Each weight is
+// split into unicode-range subsets, so the browser fetches just the glyph
+// chunks the page actually uses (light/mono variants are intentionally omitted).
+import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
+import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
 import './index.css'
 import '@/shared/i18n/config'
 import App from './App.tsx'
