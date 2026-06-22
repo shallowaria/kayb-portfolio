@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import { Button } from "@/shared/components/ui/button";
 import { ShimmerButton } from "@/shared/components/magicui/shimmer-button";
 import { FloatingSeeds } from "@/shared/components/magicui/floating-seeds";
-import { GrassDivider } from "@/features/home/components/grass-divider";
 import { useContent } from "@/shared/i18n/use-content";
 
 const fade = {
@@ -92,9 +91,6 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
-
-      {/* Weeds reclaiming the seam between hero and parchment (desktop only). */}
-      <GrassDivider className="max-lg:hidden" />
     </section>
   );
 }
