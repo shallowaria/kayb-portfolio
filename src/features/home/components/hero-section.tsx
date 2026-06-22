@@ -25,14 +25,14 @@ export function HeroSection() {
       className="relative isolate -mt-20 overflow-hidden"
       aria-label="Intro"
     >
-      {/* Solid sage text panel (rgb 230,236,226) occupying the left, with a
+      {/* Sheer sage glass panel (rgb 230,236,226) occupying the left, with a
           softly feathered right edge so the forest — and its trunk — take over
-          the right side and divide the header. Desktop only. */}
+          the right side and divide the header. The forest reads faintly through
+          the glass so text and scene fuse. Desktop only. */}
       <div
         aria-hidden
-        className="absolute inset-y-0 left-0 -z-10 hidden w-[60%] min-w-[340px] lg:block"
+        className="hero-glass absolute inset-y-0 left-0 -z-10 hidden w-[60%] min-w-[340px] lg:block"
         style={{
-          backgroundColor: "rgb(var(--hero-panel))",
           maskImage:
             "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
           WebkitMaskImage:

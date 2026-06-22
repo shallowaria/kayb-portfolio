@@ -9,10 +9,7 @@ export function PaperPanel({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn(
-        'parchment-panel rounded-2xl border border-amber-900/10 p-6',
-        className,
-      )}
+      className={cn('parchment-panel rounded-2xl p-6', className)}
       {...props}
     />
   )

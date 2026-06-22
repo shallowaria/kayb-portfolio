@@ -49,7 +49,7 @@ export const zh: Content = {
     {
       role: "高级前端开发工程师",
       company: "Greenleaf Studio",
-      period: "2022 – 至今",
+      period: "2022 - 至今",
       summary:
         "主导可扩展 Web 应用的开发，专注于性能、无障碍与令人愉悦的界面体验。",
       logo: "/experience/greenleaf.png",
@@ -57,7 +57,7 @@ export const zh: Content = {
     {
       role: "前端开发工程师",
       company: "Stonepeak Labs",
-      period: "2019 – 2022",
+      period: "2019 - 2022",
       summary: "构建响应式界面与设计系统，与设计师及后端工程师紧密协作。",
       logo: "/experience/stonepeak.png",
     },
@@ -84,7 +84,7 @@ export const zh: Content = {
     {
       degree: "计算机科学学士",
       school: "Greenfield University",
-      period: "2015 – 2019",
+      period: "2015 - 2019",
     },
   ],
   quote: {
