@@ -1,6 +1,6 @@
 # Kayb · 前端开发者求职页
 
-一个以「森林 / 残垣」为主题的个人求职简历单页应用,采用做旧羊皮纸质感与撕边纸张效果,支持中英双语与明暗主题切换。基于 **React 19 + TypeScript + Vite + Tailwind CSS v4** 构建。
+一个以「森林 / 残垣」为主题的个人求职简历单页应用,主打**背景与文字融合**的磨砂玻璃质感,叠加撕边纸张效果,支持中英双语与明暗主题切换。基于 **React 19 + TypeScript + Vite + Tailwind CSS v4** 构建。
 
 > 灵感来源于 Scavengers 风格的森林意象:雾色嫩绿画布、深林绿主色、漂浮的种子与重新生长、占领接缝的杂草。
 
@@ -12,13 +12,13 @@
 
 ## ✨ 功能特性
 
-- 🌲 **森林主题设计** — 雾绿背景 + 做旧羊皮纸内容区,撕边纸张滤镜营造手工质感
+- 🌲 **背景与文字融合** — 固定森林插画背景贯穿全页,内容区与卡片采用森林色调磨砂玻璃,文字漂浮于景中;撕边纸张滤镜保留手工质感
 - 🌗 **明暗双主题** — 基于 View Transitions API 的「圆形扩散」切换动画,刷新前无闪烁(在 `index.html` 中提前应用主题)
 - 🌏 **中英双语 i18n** — 基于 i18next,自动检测浏览器语言并持久化;`<title>` 等也随语言切换
 - 🎬 **细腻动效** — 使用 Motion(原 Framer Motion)实现入场淡入、滚动揭示、漂浮种子、闪光按钮、边框流光等
 - 🔍 **命令面板搜索** — 基于 cmdk 的快捷搜索,可快速跳转板块与项目
 - 📱 **响应式布局** — 桌面端双栏卡片网格,移动端单栏自适应
-- ♿ **可访问性友好** — 语义化标签、`aria-*` 属性,并尊重 `prefers-reduced-motion`
+- ♿ **可访问性友好** — 语义化标签、`aria-*` 属性,并尊重 `prefers-reduced-motion` 与 `prefers-reduced-transparency`(后者下玻璃转为近实色)
 - 📋 **一键复制联系方式** — QQ / 微信 等支持点击复制,配合 sonner 轻提示
 
 ## 🧩 页面板块
@@ -39,6 +39,7 @@
 | 国际化  | i18next、react-i18next                                                                 |
 | UI 基建 | Radix UI(Avatar / Dialog / Slot)、cmdk、class-variance-authority、tailwind-merge、clsx |
 | 图标    | lucide-react                                                                           |
+| 字体    | LXGW WenKai 霞鹜文楷(自托管)、Inter / Fraunces Variable(`@fontsource-variable`)     |
 | 提示    | sonner                                                                                 |
 
 ## 🎨 设计系统
@@ -56,20 +57,24 @@
 | `--muted` / `--accent` | `oklch(0.94 0.02 158)` / `oklch(0.9 0.06 152)` | 弱化 / 强调  |
 | `--radius`             | `0.75rem`                                      | 全局圆角基准 |
 
-> 暗色模式下整体压暗并偏暖,羊皮纸转为暖调深绿棕;`--hero-panel`、`--frame` 等专用令牌分别控制 Hero 文案面板与卡片边框墨线。
+> 暗色模式下整体压暗,森林薄纱与磨砂玻璃卡片转为深林绿;`--hero-panel` 令牌控制 Hero 玻璃面板的色调填充。
 
 ### 字体
 
-- **正文(`--font-sans`)**:`Inter`
-- **标题(`--font-display`)**:`Fraunces`(衬线,带视觉尺寸轴)
+全部**自托管**,不走 Google Fonts CDN(对中国大陆访客更快),在 [`src/main.tsx`](src/main.tsx) 中按需引入:
 
-字体通过 Google Fonts 在 [`index.html`](index.html) 中预连接并加载。
+- **主字体**:`LXGW WenKai`(霞鹜文楷)— 正文与标题统一使用,经 `lxgw-wenkai-webfont` 拆分为 unicode-range 子集,浏览器仅拉取页面用到的字形块(仅含 regular / bold)
+- **拉丁回退**:`Inter Variable`(正文)、`Fraunces Variable`(标题衬线,带视觉尺寸轴)— 经 `@fontsource-variable/*` 自托管
 
-### 特色质感
+`--font-sans` 与 `--font-display` 均以 LXGW WenKai 起头,定义于 [`src/index.css`](src/index.css)。
 
-- `.parchment` — 做旧羊皮纸:暖奶油色渐变 + SVG 噪声纤维纹理
-- `.parchment-torn` — 撕边滤镜(仅桌面端 ≥1024px 启用,移动端关闭以避免抖动)
-- `.parchment-panel` — 仅墨线边框、无填充的卡片框
+### 特色质感(背景 ↔ 文字融合)
+
+- `.parchment` — 半透明森林色薄纱:让固定的森林插画背景透出、与文字融为一体(取代早期的不透明羊皮纸),叠加 SVG 噪声纤维纹理
+- `.parchment-panel` — 森林色调磨砂玻璃卡片:`backdrop-blur` + 饱和度提升,顶部高光描边 + 着色投影;背景虚化为柔和景深,文字保持 WCAG AA 可读
+- `.hero-glass` — Hero 文案面板的同款磨砂玻璃,右缘羽化融入森林
+- `.parchment-torn` — 撕边滤镜(仅桌面端 ≥1024px 启用,移动端关闭以避免抖动);杂草自羊皮卷顶部边缘向上生长
+- `prefers-reduced-transparency` 回退:系统要求降低透明度时,玻璃自动转为近实色以保证对比度
 - 自定义细滚动条(主题嫩绿色)
 
 ## 📁 项目结构
@@ -93,7 +98,7 @@ src/
    │  └─ ...                    # responsive-image、reveal、torn-filter 等
    ├─ config/                   # site.ts(站点元信息)、skills.ts(技能清单)
    ├─ i18n/                     # 语言检测、资源、类型与 useContent Hook
-   └─ lib/                      # use-theme、utils(cn 等)
+   └─ lib/                      # use-theme、utils(cn + 按钮/徽章 cva 变体)
 ```
 
 > 路径别名:`@/` 指向 `src/`。
