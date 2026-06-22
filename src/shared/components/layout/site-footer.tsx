@@ -41,7 +41,7 @@ export function SiteFooter() {
   ]
 
   return (
-    <footer className="border-t border-amber-900/10">
+    <footer className="border-t border-primary/15">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-7 sm:flex-row md:px-10">
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} {content.name} {content.brandTagline}.{' '}

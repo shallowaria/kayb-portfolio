@@ -20,7 +20,7 @@ export function SkillsCard() {
                   href={skill.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-md border border-amber-900/15 bg-background/40 px-3 py-1.5 text-sm text-foreground/85 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                  className="rounded-md border border-primary/15 bg-background/40 px-3 py-1.5 text-sm text-foreground/85 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                 >
                   {skill.name}
                 </a>

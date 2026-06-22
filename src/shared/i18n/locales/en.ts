@@ -52,7 +52,7 @@ export const en: Content = {
     {
       role: "Senior Front-end Developer",
       company: "Greenleaf Studio",
-      period: "2022 – Present",
+      period: "2022 - Present",
       summary:
         "Lead the development of scalable web applications. Focus on performance, accessibility, and delightful UI.",
       logo: "/experience/greenleaf.png",
@@ -60,7 +60,7 @@ export const en: Content = {
     {
       role: "Front-end Developer",
       company: "Stonepeak Labs",
-      period: "2019 – 2022",
+      period: "2019 - 2022",
       summary:
         "Built responsive interfaces and design systems. Collaborated with designers and back-end engineers.",
       logo: "/experience/stonepeak.png",
@@ -88,7 +88,7 @@ export const en: Content = {
     {
       degree: "B.Sc. in Computer Science",
       school: "Greenfield University",
-      period: "2015 – 2019",
+      period: "2015 - 2019",
     },
   ],
   quote: {

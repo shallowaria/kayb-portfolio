@@ -27,7 +27,7 @@ export function QuoteCard() {
           {content.quote.text}
         </p>
         <p className="mt-3 text-sm text-muted-foreground">
-          — {content.quote.author}
+          - {content.quote.author}
         </p>
       </div>
     </PaperSection>

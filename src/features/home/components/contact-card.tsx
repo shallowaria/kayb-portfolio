@@ -69,13 +69,13 @@ export function ContactCard() {
         duration={18}
       />
 
-      <ul className="relative z-10 grid gap-5 sm:grid-cols-2">
+      <ul className="relative z-10 mx-auto grid w-fit gap-x-12 gap-y-5 sm:grid-cols-2">
         {/* QQ / WeChat — click the number or the button to copy */}
         {copyItems.map(({ key, Icon, label, value }) => {
           const isCopied = copiedKey === key
           return (
             <li key={key} className="flex items-center gap-3">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-amber-900/15 bg-background/40 text-primary">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-background/40 text-primary">
                 <Icon className="size-4" />
               </span>
               <div className="min-w-0 flex-1">
@@ -114,7 +114,7 @@ export function ContactCard() {
         {/* Email / Phone — direct links */}
         {linkItems.map(({ Icon, label, value, href }) => (
           <li key={label} className="flex items-center gap-3">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-amber-900/15 bg-background/40 text-primary">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-background/40 text-primary">
               <Icon className="size-4" />
             </span>
             <div className="min-w-0">
