@@ -20,7 +20,7 @@ export function HomePage() {
             Root height: the negative bottom margin seats the roots into the
             parchment. More negative = lower/deeper; positive = lifts onto the
             forest. Tune this single pixel value. */}
-        <GrassDivider className="absolute bottom-full left-0 z-[1] mb-2 max-lg:hidden" />
+        <GrassDivider className="absolute bottom-full left-0 z-[1] mb-[9px] max-lg:hidden" />
         <div className="relative">
           <HomeContent />
           <SiteFooter />

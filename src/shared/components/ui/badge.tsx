@@ -1,27 +1,8 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { type VariantProps } from 'class-variance-authority'
 
-import { cn } from '@/shared/lib/utils'
-
-const badgeVariants = cva(
-  'inline-flex items-center justify-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium w-fit whitespace-nowrap transition-colors',
-  {
-    variants: {
-      variant: {
-        default:
-          'border-transparent bg-primary/10 text-primary',
-        secondary:
-          'border-transparent bg-secondary text-secondary-foreground',
-        outline:
-          'border-border bg-background/50 text-foreground',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  },
-)
+import { cn, badgeVariants } from '@/shared/lib/utils'
 
 function Badge({
   className,
@@ -40,4 +21,4 @@ function Badge({
   )
 }
 
-export { Badge, badgeVariants }
+export { Badge }
