@@ -315,10 +315,17 @@ html.vt-to-light::view-transition-new(root) {
    circular clip plays underneath. It simply cross-fades with the theme. */
 ::view-transition-group(site-header) {
   z-index: var(--z-vt-header);
+  /* Never morph the group's box. If the bar's position differs between the old
+     and new snapshots (e.g. a scroll settled mid-transition), the default group
+     animation would slide it — that is the "header floats up" bug. Pinning the
+     animation off forces an in-place cross-fade only (the old/new layers keep
+     their default opacity fade). */
+  animation: none;
+  top: 0;
 }
 ::view-transition-old(site-header),
 ::view-transition-new(site-header) {
-  /* Default cross-fade is fine; pin height so it doesn't stretch-animate. */
+  /* Pin height so the layers don't stretch-animate; opacity still cross-fades. */
   height: 100%;
 }
 

@@ -125,9 +125,17 @@ export function SiteHeader() {
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 8);
+      // While a theme view-transition is playing, the bar is lifted into its own
+      // VT snapshot group; flipping hidden mid-transition would animate that
+      // group's position and make the bar float. Freeze show/hide (track
+      // position only) until the reveal finishes. use-theme tags <html> for the
+      // duration.
+      const inThemeTransition =
+        document.documentElement.classList.contains("vt-to-dark") ||
+        document.documentElement.classList.contains("vt-to-light");
       // During the post-language-switch reflow window, only track position —
       // a programmatic scrollY shift must not be read as a user swipe.
-      if (Date.now() < reflowGuardUntil.current) {
+      if (inThemeTransition || Date.now() < reflowGuardUntil.current) {
         scrollAccum.current = 0;
         lastY.current = y;
         setOverParchment(y >= contentStartTop.current - 80);
@@ -186,11 +194,21 @@ export function SiteHeader() {
     );
   };
 
+  // The bar is on-screen unless it has been slid away by a scroll-down.
+  const barVisible = !hidden || menuOpen;
+
   return (
     <header
       data-parchment={overParchment ? "true" : "false"}
       className={cn(
-        "group/header sticky top-0 z-40 [view-transition-name:site-header] transition-[translate,background-color,border-color] duration-300 ease-out",
+        "group/header sticky top-0 z-40 transition-[translate,background-color,border-color] duration-300 ease-out",
+        // Lift the bar into its own view-transition group ONLY while it is
+        // visible, so a theme toggle cross-fades it in place instead of folding
+        // it into the root snapshot (where it vanishes on real mobile). When it
+        // is slid off-screen (-100%) we drop the name: a named, transformed-away
+        // sticky element gets mis-placed by the VT snapshot and floats back into
+        // view during the reveal.
+        barVisible && "[view-transition-name:site-header]",
         hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
         overParchment
           ? // Over parchment: light-green → sky-blue gradient bar. Blur is
