@@ -278,6 +278,14 @@
 }
 
 /* ---- Theme circular reveal (View Transitions API) ---- */
+/* Stacking order *within the view-transition overlay* (its own top-level
+   stacking context, so these only compete with each other — small ordinals are
+   enough, no need for max-int magic numbers). The header group sits one step
+   above the reveal so it stays painted while the circular clip plays under it. */
+:root {
+  --z-vt-reveal: 1;
+  --z-vt-header: 2;
+}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -285,18 +293,33 @@
 }
 /* Going dark: the new (dark) view sits on top and expands from the click. */
 html.vt-to-dark::view-transition-new(root) {
-  z-index: 2147483646;
+  z-index: var(--z-vt-reveal);
 }
 html.vt-to-dark::view-transition-old(root) {
-  z-index: 1;
+  z-index: 0;
 }
 /* Going light: the old (dark) view sits on top and shrinks toward the click,
    so light fills in from the outside edges. */
 html.vt-to-light::view-transition-old(root) {
-  z-index: 2147483646;
+  z-index: var(--z-vt-reveal);
 }
 html.vt-to-light::view-transition-new(root) {
-  z-index: 1;
+  z-index: 0;
+}
+
+/* The sticky header is lifted into its own view-transition group so it isn't
+   captured inside the root snapshot — on real mobile browsers a sticky element
+   folded into the root snapshot drops out for the duration of the reveal,
+   making the bar vanish until the animation ends. Its own group keeps it
+   painted, and a z-index above the root reveal layer keeps it on top while the
+   circular clip plays underneath. It simply cross-fades with the theme. */
+::view-transition-group(site-header) {
+  z-index: var(--z-vt-header);
+}
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  /* Default cross-fade is fine; pin height so it doesn't stretch-animate. */
+  height: 100%;
 }
 
 /* ---- Custom scrollbar: thin themed (light-green) line ---- */

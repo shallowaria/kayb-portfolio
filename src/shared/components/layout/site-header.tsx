@@ -19,7 +19,7 @@ import {
   headerActionToneMobile,
 } from "@/shared/components/layout/action-tone";
 import { SearchButton } from "@/features/search/search-button";
-import { useContent } from "@/shared/i18n/use-content";
+import { useContent, useLanguage } from "@/shared/i18n/use-content";
 import { resources } from "@/shared/i18n/resources";
 import { siteConfig } from "@/shared/config/site";
 
@@ -30,6 +30,7 @@ const SearchCommand = lazy(() => import("@/features/search/site-search"));
 
 export function SiteHeader() {
   const content = useContent();
+  const { current: lang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [overParchment, setOverParchment] = useState(false);
@@ -43,6 +44,10 @@ export function SiteHeader() {
   // small but deliberate swipe cross the show/hide threshold while ignoring the
   // tiny back-and-forth jitter mobile momentum scrolling produces.
   const scrollAccum = useRef(0);
+  // Timestamp (ms) until which the show/hide logic ignores scroll deltas: a
+  // language switch reflows the page and shifts scrollY, which would otherwise
+  // read as a user swipe and slide the bar away. Set on language change.
+  const reflowGuardUntil = useRef(0);
   // Document-space top of #content-start, measured off the scroll path so the
   // per-scroll handler can decide `overParchment` with arithmetic instead of a
   // getBoundingClientRect() — that read was forcing a synchronous reflow on
@@ -80,6 +85,19 @@ export function SiteHeader() {
     return () => window.clearTimeout(t);
   }, []);
 
+  // A language switch reflows the page (different text lengths) and can shift
+  // scrollY. Open a short window during which onScroll only resyncs its
+  // baseline instead of toggling visibility, so the bar doesn't slide away on
+  // its own. Skips the initial mount (no real switch happened yet).
+  const didMountLang = useRef(false);
+  useEffect(() => {
+    if (!didMountLang.current) {
+      didMountLang.current = true;
+      return;
+    }
+    reflowGuardUntil.current = Date.now() + 400;
+  }, [lang]);
+
   // Cmd/Ctrl+K opens the palette. Lives here (not in the lazy component) so the
   // shortcut works before the chunk has loaded.
   useEffect(() => {
@@ -107,6 +125,14 @@ export function SiteHeader() {
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 8);
+      // During the post-language-switch reflow window, only track position —
+      // a programmatic scrollY shift must not be read as a user swipe.
+      if (Date.now() < reflowGuardUntil.current) {
+        scrollAccum.current = 0;
+        lastY.current = y;
+        setOverParchment(y >= contentStartTop.current - 80);
+        return;
+      }
       // Near the very top the bar is always shown, no matter the direction.
       if (y <= 96) {
         setHidden(false);
@@ -115,7 +141,7 @@ export function SiteHeader() {
         const delta = y - lastY.current;
         // Reset the run whenever direction flips, so a deliberate swipe doesn't
         // have to first cancel out earlier opposite movement.
-        if ((delta > 0) !== (scrollAccum.current > 0)) scrollAccum.current = 0;
+        if (delta > 0 !== scrollAccum.current > 0) scrollAccum.current = 0;
         scrollAccum.current += delta;
         // ~6px of sustained travel is enough to react — responsive to small
         // swipes, but above the noise floor of momentum/rubber-band jitter.
@@ -164,7 +190,7 @@ export function SiteHeader() {
     <header
       data-parchment={overParchment ? "true" : "false"}
       className={cn(
-        "group/header sticky top-0 z-40 transition-[transform,background-color,border-color] duration-300 ease-out",
+        "group/header sticky top-0 z-40 [view-transition-name:site-header] transition-[translate,background-color,border-color] duration-300 ease-out",
         hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
         overParchment
           ? // Over parchment: light-green → sky-blue gradient bar. Blur is
@@ -244,7 +270,12 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
+            // Spread the ARIA state instead of writing `aria-expanded={...}`
+            // inline: the axe/aria static checker parses this TSX as HTML and
+            // collapses any JSX expression to the literal `{expression}`, which
+            // it then rejects as an invalid value. Spreading keeps the attribute
+            // out of the literal source; React still serializes the boolean.
+            {...{ "aria-expanded": menuOpen }}
             aria-label="Toggle menu"
             className="flex size-9 items-center justify-center rounded-full border border-border/60 bg-background/90 text-primary transition-colors hover:text-primary group-data-[parchment=true]/header:text-foreground/80"
           >
