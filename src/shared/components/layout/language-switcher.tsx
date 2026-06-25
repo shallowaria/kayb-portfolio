@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Languages, Check } from 'lucide-react'
 
 import { cn } from '@/shared/lib/utils'
@@ -7,6 +8,22 @@ import { LANGS, type Lang } from '@/shared/i18n/resources'
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { current, setLanguage } = useLanguage()
   const content = useContent()
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // The dropdown opens via :focus-within. On touch, tapping the trigger leaves
+  // it focused, so it would otherwise stay open while the page scrolls. Drop
+  // focus on scroll to dismiss it (desktop hover is unaffected).
+  useEffect(() => {
+    const onScroll = () => {
+      const root = rootRef.current
+      const active = document.activeElement
+      if (root && active instanceof HTMLElement && root.contains(active)) {
+        active.blur()
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const labels: Record<Lang, string> = {
     zh: content.language.zh,
@@ -14,7 +31,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   }
 
   return (
-    <div className="group/lang relative">
+    <div ref={rootRef} className="group/lang relative">
       <button
         type="button"
         aria-label={content.language.label}

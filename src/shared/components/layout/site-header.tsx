@@ -39,6 +39,10 @@ export function SiteHeader() {
   // and isn't torn down when the palette closes.
   const [searchLoaded, setSearchLoaded] = useState(false);
   const lastY = useRef(0);
+  // Signed sum of same-direction scroll since the last direction flip. Lets a
+  // small but deliberate swipe cross the show/hide threshold while ignoring the
+  // tiny back-and-forth jitter mobile momentum scrolling produces.
+  const scrollAccum = useRef(0);
   // Document-space top of #content-start, measured off the scroll path so the
   // per-scroll handler can decide `overParchment` with arithmetic instead of a
   // getBoundingClientRect() — that read was forcing a synchronous reflow on
@@ -49,6 +53,32 @@ export function SiteHeader() {
     setSearchLoaded(true);
     setSearchOpen(true);
   };
+
+  // Warm the lazy search chunk once the browser is idle. The eager hero image
+  // loads at high priority and can saturate the connection on first paint, so
+  // without this the chunk isn't fetched until the first click — making the
+  // search button feel dead until the background settles. Same specifier as the
+  // lazy() above, so it resolves from cache the moment the user opens search.
+  useEffect(() => {
+    const warm = () => void import("@/features/search/site-search");
+    const ric = (
+      window as Window &
+        typeof globalThis & {
+          requestIdleCallback?: (cb: () => void) => number;
+          cancelIdleCallback?: (id: number) => void;
+        }
+    ).requestIdleCallback;
+    if (ric) {
+      const id = ric(warm);
+      return () => {
+        (
+          window as Window & { cancelIdleCallback?: (id: number) => void }
+        ).cancelIdleCallback?.(id);
+      };
+    }
+    const t = window.setTimeout(warm, 2000);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Cmd/Ctrl+K opens the palette. Lives here (not in the lazy component) so the
   // shortcut works before the chunk has loaded.
@@ -77,9 +107,21 @@ export function SiteHeader() {
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 8);
-      // Slide the bar up when scrolling down, reveal it when scrolling up.
-      if (y > lastY.current && y > 96) setHidden(true);
-      else if (y < lastY.current) setHidden(false);
+      // Near the very top the bar is always shown, no matter the direction.
+      if (y <= 96) {
+        setHidden(false);
+        scrollAccum.current = 0;
+      } else {
+        const delta = y - lastY.current;
+        // Reset the run whenever direction flips, so a deliberate swipe doesn't
+        // have to first cancel out earlier opposite movement.
+        if ((delta > 0) !== (scrollAccum.current > 0)) scrollAccum.current = 0;
+        scrollAccum.current += delta;
+        // ~6px of sustained travel is enough to react — responsive to small
+        // swipes, but above the noise floor of momentum/rubber-band jitter.
+        if (scrollAccum.current > 6) setHidden(true);
+        else if (scrollAccum.current < -6) setHidden(false);
+      }
       lastY.current = y;
       // Has the header (80px tall) reached the parchment content yet?
       setOverParchment(y >= contentStartTop.current - 80);
@@ -122,14 +164,18 @@ export function SiteHeader() {
     <header
       data-parchment={overParchment ? "true" : "false"}
       className={cn(
-        "group/header sticky top-0 z-40 transition-[transform,background-color,backdrop-filter,border-color] duration-300 ease-out",
+        "group/header sticky top-0 z-40 transition-[transform,background-color,border-color] duration-300 ease-out",
         hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
         overParchment
-          ? // Over parchment: light-green → sky-blue gradient bar.
-            "border-b border-border/30 bg-gradient-to-r from-emerald-100/90 to-sky-200/90 backdrop-blur-md dark:from-emerald-950/85 dark:to-sky-950/85"
+          ? // Over parchment: light-green → sky-blue gradient bar. Blur is
+            // desktop-only — on mobile the backdrop-filter sits over the
+            // GPU-promoted fixed backdrop and drops out during theme/language
+            // repaints, so we lean on a more opaque gradient there instead.
+            "border-b border-border/30 bg-gradient-to-r from-emerald-100/95 to-sky-200/95 lg:backdrop-blur-md lg:from-emerald-100/90 lg:to-sky-200/90 dark:from-emerald-950/90 dark:to-sky-950/90 lg:dark:from-emerald-950/85 lg:dark:to-sky-950/85"
           : scrolled || menuOpen
-            ? // Scrolled, or menu open: frosted bar on mobile for legibility.
-              "border-b border-transparent max-lg:border-border/30 max-lg:bg-background/70 max-lg:backdrop-blur-md"
+            ? // Scrolled, or menu open: frosted bar on mobile for legibility
+              // (solid translucent fill, blur only on desktop).
+              "border-b border-transparent max-lg:border-border/30 max-lg:bg-background/90 lg:backdrop-blur-md"
             : "border-b border-transparent",
       )}
     >
@@ -200,7 +246,7 @@ export function SiteHeader() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-label="Toggle menu"
-            className="flex size-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-primary backdrop-blur-sm transition-colors hover:text-primary group-data-[parchment=true]/header:text-foreground/80"
+            className="flex size-9 items-center justify-center rounded-full border border-border/60 bg-background/90 text-primary transition-colors hover:text-primary group-data-[parchment=true]/header:text-foreground/80"
           >
             {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
@@ -223,7 +269,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute inset-x-0 top-full overflow-hidden border-t border-border/50 bg-background/95 backdrop-blur-md lg:hidden"
+            className="absolute inset-x-0 top-full overflow-hidden border-t border-border/50 bg-background/98 lg:hidden"
           >
             <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
               {navItems.map((item) => (
