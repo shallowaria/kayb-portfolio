@@ -312,21 +312,38 @@ html.vt-to-light::view-transition-new(root) {
    folded into the root snapshot drops out for the duration of the reveal,
    making the bar vanish until the animation ends. Its own group keeps it
    painted, and a z-index above the root reveal layer keeps it on top while the
-   circular clip plays underneath. It simply cross-fades with the theme. */
+   circular clip plays underneath. The bar itself does not animate — it is
+   pinned in place and swapped to the new theme instantly (see below). */
 ::view-transition-group(site-header) {
   z-index: var(--z-vt-header);
-  /* Never morph the group's box. If the bar's position differs between the old
-     and new snapshots (e.g. a scroll settled mid-transition), the default group
-     animation would slide it — that is the "header floats up" bug. Pinning the
-     animation off forces an in-place cross-fade only (the old/new layers keep
-     their default opacity fade). */
+  /* Hard-pin the bar to the viewport's top-left at full width and kill the
+     group morph entirely. `animation: none` leaves nothing to interpolate, and
+     explicitly zeroing `transform` + fixing `top/left/width` means a geometry
+     diff between the old and new snapshots (mobile viewport or scroll jitter
+     mid-transition) can neither slide the bar up — the "header floats up" bug —
+     nor stretch it — the "whole header scales up" bug. `top: 0` alone is not
+     enough: the UA positions the group with a `transform`, so that must be
+     reset too. */
   animation: none;
   top: 0;
+  left: 0;
+  width: 100%;
+  transform: none;
 }
 ::view-transition-old(site-header),
 ::view-transition-new(site-header) {
-  /* Pin height so the layers don't stretch-animate; opacity still cross-fades. */
+  /* Fill the pinned group box exactly (no auto width) so neither snapshot layer
+     can scale, and turn off the default cross-fade animation. */
+  animation: none;
+  width: 100%;
   height: 100%;
+}
+::view-transition-old(site-header) {
+  /* Drop the outgoing (previous-theme) snapshot so the old and new icons
+     (moon/sun) never overlap during the reveal — without this they cross-fade
+     and are both visible at once. The new-theme bar simply appears in place
+     while the circular root reveal plays underneath it. */
+  opacity: 0;
 }
 
 /* ---- Custom scrollbar: thin themed (light-green) line ---- */
