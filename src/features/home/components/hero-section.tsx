@@ -24,13 +24,14 @@ export function HeroSection() {
       className="relative isolate -mt-20 overflow-hidden"
       aria-label="Intro"
     >
-      {/* Sheer sage glass panel (rgb 230,236,226) occupying the left, with a
-          softly feathered right edge so the forest — and its trunk — take over
+      {/* Sheer sage glass panel (rgb 230,236,226) anchored full-bleed-left, with
+          a softly feathered right edge so the forest — and its trunk — take over
           the right side and divide the header. The forest reads faintly through
-          the glass so text and scene fuse. Desktop only. */}
+          the glass so text and scene fuse. Unified across all breakpoints: the
+          panel just narrows on wider screens so more forest shows. */}
       <div
         aria-hidden
-        className="hero-glass absolute inset-y-0 left-0 -z-10 hidden w-[60%] min-w-[340px] lg:block"
+        className="hero-glass absolute inset-y-0 left-0 -z-10 block w-[86%] min-w-[340px] sm:w-[72%] lg:w-[60%]"
         style={{
           maskImage:
             "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
@@ -38,12 +39,10 @@ export function HeroSection() {
             "linear-gradient(to right, #000 0%, #000 72%, transparent 100%)",
         }}
       />
-      {/* Mobile: no panel/weeds — the forest shows through directly; the copy
-          gets a soft glow so it stays legible without a hazy overlay. */}
       <FloatingSeeds className="-z-10" count={16} />
 
       <div className="mx-auto max-w-6xl px-6 pb-32 pt-32 md:px-10 md:pb-40 md:pt-52">
-        <div className="max-w-xl max-lg:[text-shadow:0_1px_14px_rgb(255_255_255_/_0.9)] dark:max-lg:[text-shadow:0_1px_14px_rgb(0_0_0_/_0.7)]">
+        <div className="max-w-xl max-lg:[text-shadow:0_0_1px_rgb(255_255_255_/_0.7),0_1px_2px_rgb(255_255_255_/_0.6)] dark:max-lg:[text-shadow:0_0_1px_rgb(0_0_0_/_0.6),0_1px_2px_rgb(0_0_0_/_0.5)]">
           <motion.p
             {...fade}
             transition={{ duration: 0.5 }}
